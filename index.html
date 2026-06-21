@@ -272,6 +272,7 @@ font-weight:bold;
 <div id="home">
 
 <h1>Duongoringo</h1>
+<h5>made by 2than</h5>
 
 <div class="unit-divider">
   <span>2단원</span>
@@ -294,26 +295,6 @@ font-weight:bold;
 <span>단어 3</span>
 </div>
 
-<div class="node sentence right" onclick="startQuiz(1,'sentence')">
-📝
-<span>문장 1</span>
-</div>
-
-<div class="node sentence" onclick="startQuiz(1,'sentence')">
-📝
-<span>문장 2</span>
-</div>
-
-<div class="node sentence right"onclick="startQuiz(1,'sentence')">
-📝
-<span>문장 3</span>
-</div>
-
-<div class="node sentence"onclick="startQuiz(1,'sentence')">
-📝
-<span>문장 4</span>
-</div>
-
 <div class="node exam right" onclick="startQuiz(1,'exam')">
 🎯
 <span>실전 1</span>
@@ -324,6 +305,37 @@ font-weight:bold;
 <span>실전 2</span>
 </div>
 
+</div>
+
+<div class="unit-divider">
+  <span>3단원</span>
+</div>
+
+<div class="path">
+
+<div class="node vocab" onclick="startQuiz(2,'vocab')">
+📚
+<span>단어 1</span>
+</div>
+
+<div class="node vocab right" onclick="startQuiz(2,'vocab')">
+📚
+<span>단어 2</span>
+</div>
+
+<div class="node vocab" onclick="startQuiz(2,'vocab')">
+📚
+<span>단어 3</span>
+</div>
+
+<div class="node exam right" onclick="startQuiz(2,'exam')">
+🎯
+<span>실전 1</span>
+</div>
+
+<div class="node exam" onclick="startQuiz(2,'exam')">
+🎯
+<span>실전 2</span>
 </div>
 
 </div>
@@ -482,24 +494,175 @@ font-weight:bold;
     ],
 
     exam:[
-      {
-        q:"你好 의 뜻은?",
-        choices:["안녕","감사","학교","중국"],
-        answer:"안녕"
-      }
-    ]
+  {
+    q: "제3성 성조 뒤에 또 제3성 성조가 올 때, 앞 글자의 성조는 몇 성으로 변하여 발음되나요? (예: 你好)",
+    choices: ["제1성", "제2성", "제3성", "제4성"],
+    answer: "제2성"
+  },
+  {
+    q: "선생님에게 정중하게 높임말로 인사할 때 사용하는 인칭 대명사(您)의 병음은 무엇인가요?",
+    choices: ["nǐ", "nín", "nǐmen", "lǎoshī"],
+    answer: "nín"
+  },
+  {
+    q: "헤어질 때 나누는 인사말인 '明天见'의 뜻은 무엇인가요?",
+    choices: ["안녕하세요", "내일 봐", "잘 가", "감사합니다"],
+    answer: "내일 봐"
+  },
+  {
+    q: "'不(bù)'는 뒤에 제4성이 오면 성조가 바뀝니다. '不客气'를 발음할 때 '不'의 올바른 성조는 몇 성인가요?",
+    choices: ["제1성", "제2성", "제3성", "제4성"],
+    answer: "제2성"
+  },
+
+  {
+    q: "상대방의 감사 인사(Xièxie)에 대한 답변으로 가장 알맞은 표현은 무엇인가요?",
+    choices: ["Bú kèqi", "Méi guānxi", "Duìbuqǐ", "Zàijiàn"],
+    answer: "Bú kèqi"
+  },
+  {
+    q: "상대방의 사과 인사(Duìbuqǐ)에 대해 '괜찮아'라고 답할 때 사용하는 알맞은 표현은 무엇인가요?",
+    choices: ["Bú kèqi", "Méi guānxi", "Xièxie", "Míngtiān jiàn"],
+    answer: "Méi guānxi"
+  },
+  {
+    q: "교과서 필기에 적힌 표현으로, 고의가 아니거나 작은 실수에 대해 가볍게 미안함을 전할 때 쓰는 표현은 무엇인가요?",
+    choices: ["Duìbuqǐ", "bù hǎoyìsi", "Bú kèqi", "Méi guānxi"],
+    answer: "bù hǎoyìsi"
+  },
+  {
+    q: "인칭 대명사 중 '그들' 혹은 '그녀들'과 같은 복수 형태를 만들 때 단어 뒤에 공통으로 붙이는 글자는 무엇인가요?",
+    choices: ["hǎo", "jiàn", "men", "xiè"],
+    answer: "men"
+  },
+  {
+    q: "수업을 마쳤을 때 선생님이 하시는 말씀인 '수업이 끝나다'라는 뜻의 단어는 무엇인가요?",
+    choices: ["Xiàkè", "Lǎoshī", "Dàjiā", "Guānxi"],
+    answer: "Xiàkè"
+  },
+  {
+    q: "단어장에 등장하는 표현 중 '없다'라는 뜻을 가진 단어는 무엇인가요?",
+    choices: ["Bù", "Méi", "Xiè", "Hǎo"],
+    answer: "Méi"
+  }
+]
 
   },
 
   2:{
 
     vocab:[
-      {
-        q:"学校",
-        choices:["학교","집","친구","물"],
-        answer:"학교"
-      }
-    ],
+  {
+    q: "중국어 단어 'jiào'의 뜻은 무엇인가요?",
+    choices: ["~라고 부르다", "이름", "무엇", "~이다"],
+    answer: "~라고 부르다"
+  },
+  {
+    q: "중국어 단어 'shénme'의 뜻은 무엇인가요?",
+    choices: ["어느", "나라", "무엇", "사람"],
+    answer: "무엇"
+  },
+  {
+    q: "중국어 단어 'guó'의 뜻은 무엇인가요?",
+    choices: ["나라", "사람", "이름", "친구"],
+    answer: "나라"
+  },
+  {
+    q: "중국어 단어 'rén'의 뜻은 무엇인가요?",
+    choices: ["친구", "사람", "학생", "선생님"],
+    answer: "사람"
+  },
+  {
+    q: "중국어 단어 'shuài'의 뜻은 무엇인가요?",
+    choices: ["잘생기다", "예쁘다", "귀엽다", "보기 좋다"],
+    answer: "잘생기다"
+  },
+  {
+    q: "중국어 단어 'péngyou'의 뜻은 무엇인가요?",
+    choices: ["선생님", "학생", "여러분", "친구"],
+    answer: "친구"
+  },
+  {
+    q: "중국어 단어 'piàoliang'의 뜻은 무엇인가요?",
+    choices: ["예쁘다", "귀엽다", "잘생기다", "근사하다"],
+    answer: "예쁘다"
+  },
+  {
+    q: "중국어 단어 'hǎokàn'의 뜻은 무엇인가요?",
+    choices: ["귀엽다", "보기 좋다, 근사하다", "어리다", "학생"],
+    answer: "보기 좋다, 근사하다"
+  },
+  {
+    q: "중국어 단어 'kě'ài'의 뜻은 무엇인가요?",
+    choices: ["귀엽다", "예쁘다", "잘생기다", "아주 좋다"],
+    answer: "귀엽다"
+  },
+  {
+    q: "중국어 단어 'xuésheng'의 뜻은 무엇인가요?",
+    choices: ["선생님", "친구", "학생", "사람"],
+    answer: "학생"
+  },
+  {
+    q: "국가 이름 중 'Hánguó'는 어느 나라인가요?",
+    choices: ["한국", "중국", "일본", "미국"],
+    answer: "한국"
+  },
+  {
+    q: "국가 이름 중 'Zhōngguó'는 어느 나라인가요?",
+    choices: ["한국", "영국", "태국", "중국"],
+    answer: "중국"
+  },
+  {
+    q: "국가 이름 중 'Rìběn'은 어느 나라인가요?",
+    choices: ["일본", "인도", "독일", "멕시코"],
+    answer: "일본"
+  },
+  {
+    q: "국가 이름 중 'Měiguó'는 어느 나라인가요?",
+    choices: ["영국", "미국", "태국", "독일"],
+    answer: "미국"
+  },
+  {
+    q: "국가 이름 중 'Jiānádà'는 어느 나라인가요?",
+    choices: ["싱가포르", "이탈리아", "캐나다", "멕시코"],
+    answer: "캐나다"
+  },
+  {
+    q: "국가 이름 중 'Déguó'는 어느 나라인가요?",
+    choices: ["독일", "영국", "태국", "미국"],
+    answer: "독일"
+  },
+  {
+    q: "국가 이름 중 'Mòxīgē'는 어느 나라인가요?",
+    choices: ["이탈리아", "멕시코", "인도", "캐나다"],
+    answer: "멕시코"
+  },
+  {
+    q: "국가 이름 중 'Xīnjiāpō'는 어느 나라인가요?",
+    choices: ["싱가포르", "태국", "인도", "일본"],
+    answer: "싱가포르"
+  },
+  {
+    q: "국가 이름 중 'Yīngguó'는 어느 나라인가요?",
+    choices: ["미국", "독일", "영국", "중국"],
+    answer: "영국"
+  },
+  {
+    q: "국가 이름 중 'Yìdàlì'는 어느 나라인가요?",
+    choices: ["인도", "이탈리아", "캐나다", "멕시코"],
+    answer: "이탈리아"
+  },
+  {
+    q: "국가 이름 중 'Yìndù'는 어느 나라인가요?",
+    choices: ["인도", "일본", "태국", "독일"],
+    answer: "인도"
+  },
+  {
+    q: "국가 이름 중 'Tàiguó'는 어느 나라인가요?",
+    choices: ["영국", "중국", "태국", "한국"],
+    answer: "태국"
+  }
+],
 
     sentence:[
       {
@@ -510,12 +673,57 @@ font-weight:bold;
     ],
 
     exam:[
-      {
-        q:"学校 의 뜻은?",
-        choices:["학교","집","친구","물"],
-        answer:"학교"
-      }
-    ]
+  {
+    q: "이름을 물어보는 표현인 'míngzi'의 한국어 뜻은 무엇인가요?",
+    choices: ["무엇", "이름", "나라", "사람"],
+    answer: "이름"
+  },
+  {
+    q: "국적을 물어볼 때 쓰는 의문사로, '어느'라는 뜻을 가진 단어의 병음은 무엇인가요?",
+    choices: ["shénme", "nǎ", "guó", "rén"],
+    answer: "nǎ"
+  },
+  {
+    q: "중국어에서 문장 끝에 붙여 일반 평서문을 의문문으로 만들어 주는 조사(입니까?)는 무엇인가요?",
+    choices: ["ma", "de", "hěn", "shì"],
+    answer: "ma"
+  },
+  {
+    q: "중국어의 판단 동사로, '~이다' 또는 대답할 때 '네!'라는 뜻으로 쓰이는 단어는 무엇인가요?",
+    choices: ["bù", "shì", "jiào", "hěn"],
+    answer: "shì"
+  },
+  {
+    q: "'그는 매우 잘생겼다'라는 문장인 'Tā hěn shuài!'에서 '매우, 아주'라는 뜻을 가진 단어는 무엇인가요?",
+    choices: ["shuài", "hěn", "de", "péngyou"],
+    answer: "hěn"
+  },
+  {
+    q: "중국어에서 '~의'라는 뜻으로 구조 조사를 나타내며, '내 친구'를 'wǒ de péngyou'라고 할 때 쓰인 단어는 무엇인가요?",
+    choices: ["ma", "de", "hěn", "shì"],
+    answer: "de"
+  },
+  {
+    q: "나이가 비슷하거나 어린 사람을 친근하게 부를 때, 성이나 이름 앞에 붙이는 글자(어리다)는 무엇인가요?",
+    choices: ["xiǎo", "hěn", "shì", "jiào"],
+    answer: "xiǎo"
+  },
+  {
+    q: "발음 쏙쏙 코너의 내용으로, 'a, o, e'로 시작하는 음절을 앞 음절과 구분하기 위해 사용하는 기호(예: kě'ài)의 명칭은 무엇인가요?",
+    choices: ["성조부호", "격음부호", "한어병음", "성모"],
+    answer: "격음부호"
+  },
+  {
+    q: "'bù'는 뒤에 제4성이 오면 제2성으로 변합니다. '~이 아니다'라는 뜻의 'bú shì'를 발음할 때 'bù'의 성조 변화는 어떠한가요?",
+    choices: ["제1성으로 변함", "제2성으로 변함", "제3성으로 변함", "원래대로 제4성으로 발음"],
+    answer: "제2성으로 변함"
+  },
+  {
+    q: "교과서 본문에서 김동민이 국적을 답할 때 사용한 표현으로, '한국인'을 뜻하는 중국어 단어는 무엇인가요?",
+    choices: ["Zhōngguórén", "Rìběnrén", "Hánguórén", "Měiguórén"],
+    answer: "Hánguórén"
+  }
+]
 
   }
 
