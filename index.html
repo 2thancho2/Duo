@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Duongoringo</title>
+
+<style>
+  body{
+margin:0;
+background:#f7f7f7;
+font-family:sans-serif;
+}
+
+h1{
+text-align:center;
+padding:20px;
+}
+
+.unit-divider{
+margin:20px;
+text-align:center;
+font-weight:bold;
+border-top:3px solid #ddd;
+padding-top:15px;
+}
+
+.path{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:25px;
+padding-bottom:100px;
+}
+
+.node{
+width:90px;
+height:90px;
+border-radius:50%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:white;
+font-size:28px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 5px 0 rgba(0,0,0,.15);
+}
+
+.node span{
+font-size:12px;
+margin-top:5px;
+}
+
+.right{
+transform:translateX(70px);
+}
+
+.vocab{
+background:#58cc02;
+}
+
+.sentence{
+background:#1cb0f6;
+}
+
+.exam{
+background:#ce82ff;
+}
+
+.hidden{
+display:none;
+}
+
+.topbar{
+display:flex;
+align-items:center;
+padding:15px;
+gap:10px;
+}
+
+.topbar button{
+border:none;
+background:none;
+font-size:25px;
+}
+
+.progress{
+flex:1;
+height:15px;
+background:#ddd;
+border-radius:30px;
+overflow:hidden;
+}
+
+#bar{
+width:40%;
+height:100%;
+background:#58cc02;
+}
+
+#quizTitle{
+text-align:center;
+}
+
+.question{
+font-size:35px;
+font-weight:bold;
+text-align:center;
+margin:40px 0;
+}
+
+.choices{
+padding:15px;
+display:grid;
+gap:15px;
+}
+
+.choice{
+padding:20px;
+border:2px solid #ddd;
+border-radius:18px;
+background:white;
+font-size:18px;
+}
+
+.choice:active{
+transform:scale(.97);
+}
+.screen{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+min-height:100vh;
+
+transition:.35s ease;
+}
+
+.hide{
+transform:translateX(100%);
+opacity:0;
+pointer-events:none;
+}
+
+.show{
+transform:translateX(0);
+opacity:1;
+}
+#bar{
+transition:width .5s ease;
+}
+
+@keyframes popIn{
+
+0%{
+opacity:0;
+transform:scale(.8);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+.node{
+animation:popIn .4s ease;
+}
+
+.question{
+transition:.25s;
+}
+
+.fadeOut{
+opacity:0;
+transform:translateY(20px);
+}
+
+#bar{
+transition:width .4s ease;
+}
+
+.choice{
+transition:.2s;
+}
+
+.choice:active{
+transform:scale(.96);
+}
+
+#resultBox{
+position:fixed;
+left:0;
+right:0;
+bottom:-250px;
+
+padding:24px;
+
+box-shadow:
+0 -10px 30px rgba(0,0,0,.15);
+
+transition:.3s ease;
+
+color:white;
+
+text-align:center;
+
+border-radius:25px 25px 0 0;
+
+z-index:999;
+}
+
+#resultBox.show{
+bottom:0;
+}
+
+#resultBox button{
+
+width:100%;
+
+height:58px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:18px;
+
+font-weight:700;
+
+cursor:pointer;
+
+margin-top:18px;
+
+transition:.15s;
+
+background:rgba(255,255,255,.2);
+
+color:white;
+
+backdrop-filter:blur(8px);
+
+box-shadow:
+inset 0 1px 0 rgba(255,255,255,.2),
+0 3px 8px rgba(0,0,0,.15);
+
+}
+
+#resultBox button:hover{
+
+transform:translateY(-1px);
+
+}
+
+#resultBox button:active{
+
+transform:scale(.97);
+
+}
+
+.resultTitle{
+font-size:24px;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div id="home">
+
+<h1>Duongoringo</h1>
+
+<div class="unit-divider">
+  <span>1단원</span>
+</div>
+
+<div class="path">
+
+<div class="node vocab" onclick="startQuiz(1,'vocab')">
+📚
+<span>단어 1</span>
+</div>
+
+<div class="node vocab right" onclick="startQuiz('단어2')">
+📚
+<span>단어 2</span>
+</div>
+
+<div class="node vocab" onclick="startQuiz('단어3')">
+📚
+<span>단어 3</span>
+</div>
+
+<div class="node sentence right" onclick="startQuiz('문장1')">
+📝
+<span>문장 1</span>
+</div>
+
+<div class="node sentence" onclick="startQuiz('문장2')">
+📝
+<span>문장 2</span>
+</div>
+
+<div class="node sentence right" onclick="startQuiz('문장3')">
+📝
+<span>문장 3</span>
+</div>
+
+<div class="node sentence" onclick="startQuiz('문장4')">
+📝
+<span>문장 4</span>
+</div>
+
+<div class="node exam right" onclick="startQuiz('실전1')">
+🎯
+<span>실전 1</span>
+</div>
+
+<div class="node exam" onclick="startQuiz('실전2')">
+🎯
+<span>실전 2</span>
+</div>
+
+</div>
+
+</div>
+
+<div id="quiz" class="hidden">
+
+<div class="topbar">
+<button onclick="goHome()">←</button>
+
+<div class="progress">
+<div id="bar"></div>
+</div>
+
+</div>
+
+<h2 id="quizTitle"></h2>
+
+<div class="question">
+你好
+</div>
+
+<div class="choices" id="choices"></div>
+
+</div>
+
+<script>
+  const data = {
+
+  1:{
+
+    vocab:[
+      {
+        q:"你好",
+        choices:["안녕","감사","미안","사랑"],
+        answer:"안녕"
+      },
+      {
+        q:"谢谢",
+        choices:["감사","안녕","사랑","학교"],
+        answer:"감사"
+      }
+    ],
+
+    sentence:[
+      {
+        q:"我是韩国人",
+        choices:["나는 한국인입니다","안녕하세요","감사합니다","학생입니다"],
+        answer:"나는 한국인입니다"
+      }
+    ],
+
+    exam:[
+      {
+        q:"你好 의 뜻은?",
+        choices:["안녕","감사","학교","중국"],
+        answer:"안녕"
+      }
+    ]
+
+  },
+
+  2:{
+
+    vocab:[
+      {
+        q:"学校",
+        choices:["학교","집","친구","물"],
+        answer:"학교"
+      }
+    ],
+
+    sentence:[
+      {
+        q:"我喜欢中国菜",
+        choices:["나는 중국 음식을 좋아한다","안녕하세요","학생입니다","감사합니다"],
+        answer:"나는 중국 음식을 좋아한다"
+      }
+    ],
+
+    exam:[
+      {
+        q:"学校 의 뜻은?",
+        choices:["학교","집","친구","물"],
+        answer:"학교"
+      }
+    ]
+
+  }
+
+};
+let currentUnit = 1;
+let currentType = "vocab";
+let questions = [];
+let current = 0;
+
+function startQuiz(unit,type){
+
+  currentUnit = unit;
+  currentType = type;
+
+  questions =
+    [...data[unit][type]];
+
+  shuffle(questions);
+
+  current = 0;
+
+  document.getElementById("home").style.display="none";
+  document.getElementById("quiz").style.display="block";
+
+  loadQuestion();
+}
+
+function shuffle(array){
+
+  for(let i=array.length-1;i>0;i--){
+
+    const j =
+      Math.floor(
+        Math.random()*(i+1)
+      );
+
+    [array[i],array[j]]
+    =
+    [array[j],array[i]];
+
+  }
+
+}
+
+function loadQuestion(){
+
+  const q = questions[current];
+
+  const questionEl = document.querySelector(".question");
+
+  questionEl.classList.add("fadeOut");
+
+  setTimeout(()=>{
+
+    questionEl.innerText = q.q;
+
+    let html = "";
+
+    q.choices.forEach(choice=>{
+
+      html += `
+      <button class="choice"
+      onclick="checkAnswer('${choice}')">
+      ${choice}
+      </button>
+      `;
+
+    });
+
+    document.getElementById("choices").innerHTML = html;
+
+    questionEl.classList.remove("fadeOut");
+
+    document.getElementById("bar").style.width =
+      ((current+1)/questions.length)*100 + "%";
+
+  },200);
+
+}
+
+function checkAnswer(choice){
+
+  const q = questions[current];
+
+  if(choice === q.answer){
+
+    showResult(true,"🎉 정답!");
+
+  }else{
+
+    showResult(false,"❌ 정답: " + q.answer);
+
+  }
+
+}
+
+function showResult(correct,text){
+
+  const box =
+    document.getElementById("resultBox");
+
+  if(!box){
+    console.error("resultBox 없음");
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="resultTitle">
+      ${text}
+    </div>
+
+    <button onclick="nextQuestion()">
+      다음
+    </button>
+  `;
+
+  box.style.background =
+    correct ? "#58CC02" : "#ff4b4b";
+
+  box.classList.add("show");
+}
+
+function nextQuestion(){
+
+  document
+  .getElementById("resultBox")
+  .classList
+  .remove("show");
+
+  current++;
+
+  if(current >= questions.length){
+
+    setTimeout(()=>{
+
+      alert("학습 완료!");
+
+      goHome();
+
+    },300);
+
+    return;
+  }
+
+  loadQuestion();
+
+}
+
+
+function goHome(){
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("home").style.display = "block";
+
+}
+</script>
+<div id="resultBox"></div>
+</body>
+</html>
