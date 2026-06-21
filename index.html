@@ -274,7 +274,7 @@ font-weight:bold;
 <h1>Duongoringo</h1>
 
 <div class="unit-divider">
-  <span>1단원</span>
+  <span>2단원</span>
 </div>
 
 <div class="path">
@@ -284,42 +284,42 @@ font-weight:bold;
 <span>단어 1</span>
 </div>
 
-<div class="node vocab right" onclick="startQuiz('단어2')">
+<div class="node vocab right" onclick="startQuiz(1,'vocab')">
 📚
 <span>단어 2</span>
 </div>
 
-<div class="node vocab" onclick="startQuiz('단어3')">
+<div class="node vocab" onclick="startQuiz(1,'vocab')">
 📚
 <span>단어 3</span>
 </div>
 
-<div class="node sentence right" onclick="startQuiz('문장1')">
+<div class="node sentence right" onclick="startQuiz(1,'sentence')">
 📝
 <span>문장 1</span>
 </div>
 
-<div class="node sentence" onclick="startQuiz('문장2')">
+<div class="node sentence" onclick="startQuiz(1,'sentence')">
 📝
 <span>문장 2</span>
 </div>
 
-<div class="node sentence right" onclick="startQuiz('문장3')">
+<div class="node sentence right"onclick="startQuiz(1,'sentence')">
 📝
 <span>문장 3</span>
 </div>
 
-<div class="node sentence" onclick="startQuiz('문장4')">
+<div class="node sentence"onclick="startQuiz(1,'sentence')">
 📝
 <span>문장 4</span>
 </div>
 
-<div class="node exam right" onclick="startQuiz('실전1')">
+<div class="node exam right" onclick="startQuiz(1,'exam')">
 🎯
 <span>실전 1</span>
 </div>
 
-<div class="node exam" onclick="startQuiz('실전2')">
+<div class="node exam" onclick="startQuiz(1,'exam')">
 🎯
 <span>실전 2</span>
 </div>
@@ -356,22 +356,52 @@ font-weight:bold;
 
     vocab:[
       {
-        q:"你好",
-        choices:["안녕","감사","미안","사랑"],
-        answer:"안녕"
+        q:"hăo",
+        choices:["감사합니다","안녕하세요","미안합니다","사랑해요"],
+        answer:"안녕하세요"
       },
       {
-        q:"谢谢",
-        choices:["감사","안녕","사랑","학교"],
-        answer:"감사"
+        q:"nǐ",
+        choices:["나","너","그","그녀"],
+        answer:"너"
+      },
+      {
+        q:"nǐmen",
+        choices:["그들","그녀들","우리들","너희들"],
+        answer:"너희들"
+      },
+      {
+        q:"zàijiàn",
+        choices:["내일봐","이따봐","잘가","오랜만이야"],
+        answer:"잘가"
+      },
+      {
+        q:"míngtiān",
+        choices:["어제","오늘","과거","내일"],
+        answer:"내일"
+      },
+      {
+        q:"jiàn",
+        choices:["만나다","해어지다","집가다","원하다"],
+        answer:"만나다"
       }
     ],
 
     sentence:[
       {
-        q:"我是韩国人",
-        choices:["나는 한국인입니다","안녕하세요","감사합니다","학생입니다"],
-        answer:"나는 한국인입니다"
+        q:"nǐ hăo!",
+        choices:["안녕","만나서 반가워","잘자","내일봐"],
+        answer:"안녕"
+      },
+      {
+        q:"zàijiàn",
+        choices:["안녕","만나서 반가워","잘자","내일봐"],
+        answer:"안녕"
+      },
+      {
+        q:"míngtiān jiàn",
+        choices:["안녕","만나서 반가워","잘자","내일봐"],
+        answer:"내일봐"
       }
     ],
 
