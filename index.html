@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Duongoringo</title>
+<title>DUONGORINGO</title>
 
 <style>
   body{
@@ -17,6 +17,7 @@
     padding:20px;
     margin: 0;
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   h5{
@@ -128,6 +129,8 @@
     text-align:center;
     margin:40px 0;
     transition:.25s;
+    padding: 0 10px;
+    word-break: keep-all;
   }
 
   .choices{
@@ -159,7 +162,7 @@
     position:fixed;
     left:0;
     right:0;
-    bottom:-250px;
+    bottom:-300px; /* 대형 화면 및 모바일 툴바 대응으로 완전히 숨기도록 하향 조정 */
     padding:24px;
     box-shadow: 0 -10px 30px rgba(0,0,0,.15);
     transition:.3s ease;
@@ -167,10 +170,12 @@
     text-align:center;
     border-radius:25px 25px 0 0;
     z-index:999;
+    visibility: hidden; /* 화면에 안 보일 때는 아예 터치나 영역 감지가 안 되도록 차단 */
   }
 
   #resultBox.show{
     bottom:0;
+    visibility: visible;
   }
 
   #resultBox button{
@@ -208,7 +213,7 @@
 <body>
 
 <div id="home">
-  <h1>Duongoringo</h1>
+  <h1>DUONGORINGO</h1>
   <h5>made by 2than</h5>
 
   <div class="unit-divider">
@@ -216,18 +221,15 @@
   </div>
 
   <div class="path">
-    <!-- 단어 노드 3개 -->
-    <div class="node vocab" onclick="startQuiz(1,'vocab')">📚<span>단어 1</span></div>
-    <div class="node vocab right" onclick="startQuiz(1,'vocab')">📚<span>단어 2</span></div>
-    <div class="node vocab" onclick="startQuiz(1,'vocab')">📚<span>단어 3</span></div>
+    <div class="node vocab" onclick="startQuiz(1,'vocab','단어 1')">📚<span>단어 1</span></div>
+    <div class="node vocab right" onclick="startQuiz(1,'vocab','단어 2')">📚<span>단어 2</span></div>
+    <div class="node vocab" onclick="startQuiz(1,'vocab','단어 3')">📚<span>단어 3</span></div>
     
-    <!-- 문장 노드 3개 -->
-    <div class="node sentence right" onclick="startQuiz(1,'sentence')">🗣️<span>문장 1</span></div>
-    <div class="node sentence" onclick="startQuiz(1,'sentence')">🗣️<span>문장 2</span></div>
-    <div class="node sentence right" onclick="startQuiz(1,'sentence')">🗣️<span>문장 3</span></div>
+    <div class="node sentence right" onclick="startQuiz(1,'sentence','문장 1')">🗣️<span>문장 1</span></div>
+    <div class="node sentence" onclick="startQuiz(1,'sentence','문장 2')">🗣️<span>문장 2</span></div>
+    <div class="node sentence right" onclick="startQuiz(1,'sentence','문장 3')">🗣️<span>문장 3</span></div>
     
-    <!-- 실전 기출 노드 1개 -->
-    <div class="node exam" onclick="startQuiz(1,'exam')">🎯<span>실전 1</span></div>
+    <div class="node exam" onclick="startQuiz(1,'exam','실전 1')">🎯<span>실전 1</span></div>
   </div>
 
   <div class="unit-divider">
@@ -235,18 +237,15 @@
   </div>
 
   <div class="path">
-    <!-- 단어 노드 3개 -->
-    <div class="node vocab" onclick="startQuiz(2,'vocab')">📚<span>단어 1</span></div>
-    <div class="node vocab right" onclick="startQuiz(2,'vocab')">📚<span>단어 2</span></div>
-    <div class="node vocab" onclick="startQuiz(2,'vocab')">📚<span>단어 3</span></div>
+    <div class="node vocab" onclick="startQuiz(2,'vocab','단어 1')">📚<span>단어 1</span></div>
+    <div class="node vocab right" onclick="startQuiz(2,'vocab','단어 2')">📚<span>단어 2</span></div>
+    <div class="node vocab" onclick="startQuiz(2,'vocab','단어 3')">📚<span>단어 3</span></div>
     
-    <!-- 문장 노드 3개 -->
-    <div class="node sentence right" onclick="startQuiz(2,'sentence')">🗣️<span>문장 1</span></div>
-    <div class="node sentence" onclick="startQuiz(2,'sentence')">🗣️<span>문장 2</span></div>
-    <div class="node sentence right" onclick="startQuiz(2,'sentence')">🗣️<span>문장 3</span></div>
+    <div class="node sentence right" onclick="startQuiz(2,'sentence','문장 1')">🗣️<span>문장 1</span></div>
+    <div class="node sentence" onclick="startQuiz(2,'sentence','문장 2')">🗣️<span>문장 2</span></div>
+    <div class="node sentence right" onclick="startQuiz(2,'sentence','문장 3')">🗣️<span>문장 3</span></div>
     
-    <!-- 실전 기출 노드 1개 -->
-    <div class="node exam" onclick="startQuiz(2,'exam')">🎯<span>실전 1</span></div>
+    <div class="node exam" onclick="startQuiz(2,'exam','실전 1')">🎯<span>실전 1</span></div>
   </div>
 </div>
 
@@ -335,7 +334,7 @@ const data = {
       { q: "Tàiguó", choices: ["영국", "중국", "태국", "한국"], answer: "태국" }
     ],
     sentence: [
-      { q:"Wǒ shì Hánguórén.", choices:["나는 중국인입니다.","나는 한국인입니다.","나는 미국인입니다.","나는 일본인입니다."], answer:"나는 한국인입니다." },
+      { q:"Wǒ  shì Hánguórén.", choices:["나는 중국인입니다.","나는 한국인입니다.","나는 미국인입니다.","나는 일본인입니다."], answer:"나는 한국인입니다." },
       { q:"Tā hěn shuài!", choices:["그녀는 매우 예쁘다!","그는 매우 잘생겼다!","그는 내 친구다.","너는 어느 나라 사람이니?"], answer:"그는 매우 잘생겼다!" },
       { q:"Nǐ jiào shénme míngzi?", choices:["너는 어느 나라 사람이니?","이름이 무엇이냐?","선생님 안녕하세요.","나는 학생이 아닙니다."], answer:"이름이 무엇이냐?" }
     ],
@@ -345,7 +344,7 @@ const data = {
       { q: "중국어에서 문장 끝에 붙여 일반 평서문을 의문문으로 만들어 주는 조사(입니까?)는 무엇인가요?", choices: ["ma", "de", "hěn", "shì"], answer: "ma" },
       { q: "중국어의 판단 동사로, '~이다' 또는 대답할 때 '네!'라는 뜻으로 쓰이는 단어는 무엇인가요?", choices: ["bù", "shì", "jiào", "hěn"], answer: "shì" },
       { q: "'그는 매우 잘생겼다'라는 문장인 'Tā hěn shuài!'에서 '매우, 아주'라는 뜻을 가진 단어는 무엇인가요?", choices: ["shuài", "hěn", "de", "péngyou"], answer: "hěn" },
-      { q: "중국어에서 '~의'라는 뜻으로 구조 조사를 나타내며, '내 친구'를 'wǒ de péngyou'라고 할 때 쓰인 단어는 무엇인가요?", choices: ["ma", "de", "hěn", "shì"], answer: "de" },
+      { q: "중국어에서 '~의'라는 뜻으로 구조 조사를 나타내며, '내 친구'를 'wǒ de pbngyou'라고 할 때 쓰인 단어는 무엇인가요?", choices: ["ma", "de", "hěn", "shì"], answer: "de" },
       { q: "나이가 비슷하거나 어린 사람을 친근하게 부를 때, 성이나 이름 앞에 붙이는 글자(어리다)는 무엇인가요?", choices: ["xiǎo", "hěn", "shì", "jiào"], answer: "xiǎo" },
       { q: "발음 쏙쏙 코너의 내용으로, 'a, o, e'로 시작하는 음절을 앞 음절과 구분하기 위해 사용하는 기호(예: kě'ài)의 명칭은 무엇인가요?", choices: ["성조부호", "격음부호", "한어병음", "성모"], answer: "격음부호" },
       { q: "'bù'는 뒤에 제4성이 오면 제2성으로 변합니다. '~이 아니다'라는 뜻의 'bú 확실한 성조 변화'인 'bú 확실한 성조 변화'인 'bú shì'를 발음할 때 'bù'의 성조 변화는 어떠한가요?", choices: ["제1성으로 변함", "제2성으로 변함", "제3성으로 변함", "원래대로 제4성으로 발음"], answer: "제2성으로 변함" },
@@ -359,33 +358,27 @@ let currentType = "vocab";
 let questions = [];
 let current = 0;
 
-function startQuiz(unit, type){
+function startQuiz(unit, type, displayName){
   currentUnit = unit;
   currentType = type;
 
-  // 전체 데이터셋을 카피해서 섞음
-  let fullPool = JSON.parse(JSON.stringify(data[unit][type]));
-  shuffle(fullPool);
+  // 1. 해당 단원의 카테고리 전체 문제 복사
+  questions = JSON.parse(JSON.stringify(data[unit][type]));
+  
+  // 2. 전체 문제 순서 랜덤 서플
+  shuffle(questions);
 
-  // 현재 타입에 맞춰 출제할 문제 수를 조절 (요청하신 개수 적용)
-  let maxQuestions = fullPool.length;
-  if(type === "vocab") maxQuestions = 3;      // 단어는 무작위 3개 추출
-  if(type === "sentence") maxQuestions = 3;   // 문장은 무작위 3개 추출
-  if(type === "exam") maxQuestions = 1;       // 실전은 무작위 1개 추출
-
-  // 풀 데이터가 요청 수보다 적을 경우 방어 코드 적용
-  if(fullPool.length > maxQuestions) {
-    questions = fullPool.slice(0, maxQuestions);
-  } else {
-    questions = fullPool;
-  }
+  // 3. 각 문제 내부의 4가지 선지(선택지) 순서도 무작위로 서플
+  questions.forEach(question => {
+    shuffle(question.choices);
+  });
 
   current = 0;
 
   document.getElementById("home").style.display = "none";
   document.getElementById("quiz").style.display = "block";
   
-  document.getElementById("quizTitle").innerText = `${unit}단원 - ${type.toUpperCase()}`;
+  document.getElementById("quizTitle").innerText = `${unit}단원 - ${displayName}`;
 
   loadQuestion();
 }
@@ -462,9 +455,11 @@ function nextQuestion(){
 }
 
 function goHome(){
-  // 메인으로 돌아갈 때 결과창 하단 슬라이드바 완벽 삭제
+  // 메인으로 이동 시 하단 결과 상자를 완벽하게 숨김(바닥 밑 -300px 수치 변경 및 visibility hidden 처리)
   const box = document.getElementById("resultBox");
-  if(box) box.classList.remove("show");
+  if(box) {
+    box.classList.remove("show");
+  }
 
   document.getElementById("quiz").style.display = "none";
   document.getElementById("home").style.display = "block";
