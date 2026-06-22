@@ -350,8 +350,8 @@ const data = {
       { q: "잘 가!", tokens: ["Zàijiàn!"], displayPool: ["Zàijiàn!", "Míngtiān", "jiàn!", "Nǐ"] },
       { q: "Míngtiān jiàn!", tokens: ["내일", "봐", "!"], displayPool: ["내일", "봐", "!", "오늘", "만나"] },
       { q: "내일 봐!", tokens: ["Míngtiān", "jiàn!"], displayPool: ["Míngtiān", "jiàn!", "Zàijiàn!", "nín"] },
-      { q: "Lǎoshī nǐ hǎo!", tokens: ["선생님", ",", "안녕하세요", "!"], displayPool: ["선생님", ",", "안녕하세요", "!", "여러분"] },
-      { q: "선생님, 안녕하세요!", tokens: ["Lǎoshī", "nǐ", "hǎo!"], displayPool: ["Lǎoshī", "nǐ", "hǎo!", "dàjiā", "nín"] },
+      { q: "Lǎoshī hǎo!", tokens: ["선생님", ",", "안녕하세요", "!"], displayPool: ["선생님", ",", "안녕하세요", "!", "여러분"] },
+      { q: "선생님, 안녕하세요!", tokens: ["Lǎoshī", "hǎo!"], displayPool: ["Lǎoshī", "nǐ", "hǎo!", "dàjiā", "nín"] },
       { q: "Dàjiā hǎo!", tokens: ["여러분", ",", "안녕하세요", "!"], displayPool: ["여러분", ",", "안녕하세요", "!", "우리들", "나"] },
       { q: "여러분, 안녕하세요!", tokens: ["Dàjiā", "hǎo!"], displayPool: ["Dàjiā", "hǎo!", "Lǎoshī", "nǐmen"] }
     ],
@@ -364,7 +364,6 @@ const data = {
       { q: "중국어 한어병음 표기 시 복운모가 결합했을 때 성조를 붙이는 우선순위가 가장 높은 운모는?", choices: ["i", "o", "e", "a"], answer: "a" },
       { q: "'nǐ hǎo'를 자연스럽게 이어서 발음할 때 실질적인 성조 변화의 형태는?", choices: ["3성 - 3성", "2성 - 3성", "4성 - 3성", "1성 - 3성"], answer: "2성 - 3성" },
       { q: "운모 'i' 위에 성조 부호를 표기할 때의 올바른 규칙은?", choices: ["i 위의 점을 그대로 둔다", "i 위의 점을 지우고 표기한다", "i의 오른쪽에 배치한다", "성조를 표기하지 않는다"], answer: "i 위의 점을 지우고 표기한다" },
-      { q: "중국인들이 아침에 일상적으로 나누는 아침 인사 표현은?", choices: ["Wǎn'ān", "Zǎoshang hǎo", "Xiàwǔ hǎo", "Nǐ hǎo ma"], answer: "Zǎoshang hǎo" },
       { q: "복수를 나타내는 인칭대명사 접미사 'men'의 올바른 성조는?", choices: ["제1성", "제2성", "경성(성조 없음)", "제4성"], answer: "경성(성조 없음)" }
     ]
   },
@@ -406,7 +405,6 @@ const data = {
       { q: "중국어 성상 형용사 문장(예: shuài)에서 주어와 형용사 술어 사이에 습관적으로 배치되는 부사는?", choices: ["bù", "hěn", "shì", "shénme"], answer: "hěn" },
       { q: "소유(~의)나 수식 관계를 설정해주는 역할을 하는 구조조사는?", choices: ["ma", "ba", "de", "ne"], answer: "de" },
       { q: "부사 'bù'가 본래 4성인 글자 앞에서 성조 변화를 일으키면 몇 성으로 발음되는가?", choices: ["제1성", "제2성", "제3성", "경성"], answer: "제2성" },
-      { q: "3인칭 여성 단수 대명사 '그녀'를 나타내는 올바른 한자와 한어병음의 조합은?", choices: ["他 (tā)", "她 (tā)", "我 (wǒ)", "你 (nǐ)"], answer: "เธอ (tā)" == " she " ? "我 (wǒ)" : " she " ? "她 (tā)" : "她 (tā)" },
       { q: "미국(USA)을 뜻하는 고유명사의 정확한 한어병음 표기는?", choices: ["Měiguó", "Yīngguó", "Rìběn", "Fǎguó"], answer: "Měiguó" },
       { q: "이름을 묻는 질문에 대해 자신의 이름을 대답하는 가장 올바른 동사 구조는?", choices: ["Wǒ 확실히...", "Wǒ jiào...", "Tā shì...", "Nǐ hǎo..."], answer: "Wǒ jiào..." },
       { q: "한어병음 표기 시 고유명사(예: 국가 이름, 인명 등)의 첫 알파벳 글자는 어떻게 처리하는가?", choices: ["소문자로 쓴다", "대문자로 표기한다", "성조를 생략한다", "기호로 대체한다"], answer: "대문자로 표기한다" }
@@ -454,7 +452,6 @@ const data = {
       { q: "자신과 연배가 비슷하거나 성인 이상인 사람에게 나이를 정중히 물어볼 때 쓰는 의문 구조는?", choices: ["jǐ suì", "duō dà", "shénme", "shéi"], answer: "duō dà" },
       { q: "'학교나 학년에 다니다'라고 서술할 때 빈칸에 알맞은 동사는? [ wǒ (   ) xué ]", choices: ["shàng", "xià", "huí", "jiào"], answer: "shàng" },
       { q: "친할아버지와 친할머니를 뜻하는 호칭 명사의 올바른 세트 구성은?", choices: ["bàba - māma", "yéye - nǎinai", "gēge - jiějie", "wáwa - nǎinai"], answer: "yéye - nǎinai" },
-      { q: "가족 구성원이 '몇 명'인지 식구를 셀 때 동사 'yǒu' 뒤에 결합하는 수량 전용 양사는?", choices: ["suì", "kǒu", "hào", "diǎn"], answer: "kǒu" },
       { q: "가족 구성원 명사 중 '형' 또는 '오빠'를 의미하는 단어는?", choices: ["dìdi", "gēge", "jiějie", "shéi"], answer: "gēge" }
     ]
   },
