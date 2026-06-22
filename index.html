@@ -274,34 +274,34 @@
   <h5>made by 2than</h5>
 
   <!-- 2단원 -->
-  <div class="unit-divider"><span>2단원 (Nǐ hǎo!)</span></div>
+  <div class="unit-divider"><span>2단원</span></div>
   <div class="path">
     <div class="node vocab" onclick="startQuiz(2,'vocab','단어')">📚<span>단어</span></div>
-    <div class="node sentence right" onclick="startQuiz(2,'sentence','문장')">🗣️<span>문장</span></div>
+    <div class="node sentence right" onclick="startQuiz(2,'sentence','문장 복습')">🗣️<span>문장</span></div>
     <div class="node exam" onclick="startQuiz(2,'exam','실전 기출')">🎯<span>실전 기출</span></div>
   </div>
 
   <!-- 3단원 -->
-  <div class="unit-divider"><span>3단원 (Nǐ de kěshì...)</span></div>
+  <div class="unit-divider"><span>3단원</span></div>
   <div class="path">
     <div class="node vocab" onclick="startQuiz(3,'vocab','단어')">📚<span>단어</span></div>
-    <div class="node sentence right" onclick="startQuiz(3,'sentence','문장')">🗣️<span>문장</span></div>
+    <div class="node sentence right" onclick="startQuiz(3,'sentence','문장 복습')">🗣️<span>문장</span></div>
     <div class="node exam" onclick="startQuiz(3,'exam','실전 기출')">🎯<span>실전 기출</span></div>
   </div>
 
   <!-- 4단원 -->
-  <div class="unit-divider"><span>4단원 (Tā shì shéi?)</span></div>
+  <div class="unit-divider"><span>4단원</span></div>
   <div class="path">
     <div class="node vocab" onclick="startQuiz(4,'vocab','단어')">📚<span>단어</span></div>
-    <div class="node sentence right" onclick="startQuiz(4,'sentence','문장')">🗣️<span>문장</span></div>
+    <div class="node sentence right" onclick="startQuiz(4,'sentence','문장 복습')">🗣️<span>문장</span></div>
     <div class="node exam" onclick="startQuiz(4,'exam','실전 기출')">🎯<span>실전 기출</span></div>
   </div>
 
   <!-- 5단원 -->
-  <div class="unit-divider"><span>5단원 (Jīntiān jǐ yuè jǐ hào?)</span></div>
+  <div class="unit-divider"><span>5단원</span></div>
   <div class="path">
     <div class="node vocab" onclick="startQuiz(5,'vocab','단어')">📚<span>단어</span></div>
-    <div class="node sentence right" onclick="startQuiz(5,'sentence','문장')">🗣️<span>문장</span></div>
+    <div class="node sentence right" onclick="startQuiz(5,'sentence','문장 복습')">🗣️<span>문장</span></div>
     <div class="node exam" onclick="startQuiz(5,'exam','실전 기출')">🎯<span>실전 기출</span></div>
   </div>
 </div>
@@ -327,62 +327,179 @@
 const data = {
   2: {
     vocab: [
-      { q:"hǎo", choices:["감사합니다","안녕하세요","미안합니다","사랑해요"], answer:"안녕하세요" },
-      { q:"nǐ", choices:["나","너","그","그녀"], answer:"너" },
-      { q:"zàijiàn", choices:["내일봐","이따봐","잘가","오랜만이야"], answer:"잘가" }
+      { q: "hǎo", choices: ["안녕하세요, 좋다", "선생님", "내일 봐", "여러분"], answer: "안녕하세요, 좋다" },
+      { q: "nǐ", choices: ["나", "너, 당신", "그", "그녀"], answer: "너, 당신" },
+      { q: "zàijiàn", choices: ["안녕하세요", "미안합니다", "또 만납시다, 잘 가", "감사합니다"], answer: "또 만납시다, 잘 가" },
+      { q: "míngtiān", choices: ["오늘", "어제", "내일", "모레"], answer: "내일" },
+      { q: "jiàn", choices: ["보다, 만나다", "말하다", "듣다", "가다"], answer: "보다, 만나다" },
+      { q: "wǒ", choices: ["너", "나", "그", "우리"], answer: "나" },
+      { q: "lǎoshī", choices: ["학생", "의사", "선생님", "경찰"], answer: "선생님" },
+      { q: "nín", choices: ["너(평칭)", "당신, 어르신(존칭)", "그들", "너희들"], answer: "당신, 어르신(존칭)" },
+      { q: "nǐmen", choices: ["너희들", "우리들", "그들", "여러분"], answer: "너희들" },
+      { q: "dàjiā", choices: ["가족", "친구", "여러분, 모두", "동료"], answer: "여러분, 모두" },
+      { q: "xièxie", choices: ["미안합니다", "괜찮습니다", "천만에요", "감사합니다"], answer: "감사합니다" },
+      { q: "bú xiè", choices: ["별말씀을요, 천만에요", "고맙습니다", "미안합니다", "잘 가"], answer: "별말씀을요, 천만에요" },
+      { q: "bú kèqi", choices: ["천만에요, 사양하지 마세요", "실례합니다", "안녕하세요", "괜찮습니다"], answer: "천만에요, 사양하지 마세요" },
+      { q: "duìbuqǐ", choices: ["괜찮습니다", "미안합니다", "감사합니다", "축하합니다"], answer: "미안합니다" },
+      { q: "méi guānxi", choices: ["미안합니다", "알겠습니다", "괜찮습니다", "상관없습니다"], answer: "괜찮습니다" }
     ],
     sentence: [
-      { type: 1, q: "Nǐ hǎo!", tokens: ["안녕", "!"], displayPool: ["안녕", "!", "잘 가", "내일 봐"] },
-      { type: 2, q: "안녕!", tokens: ["Nǐ", "hǎo!"], displayPool: ["Nǐ", "hǎo!", "Zàijiàn!", "Wǒ"] },
-      { type: 1, q: "Zàijiàn!", tokens: ["잘", "가", "!"], displayPool: ["잘", "가", "!", "만나서", "반가워"] }
+      { q: "Nǐ hǎo!", tokens: ["안녕", "!"], displayPool: ["안녕", "!", "잘 가", "내일 봐"] },
+      { q: "안녕!", tokens: ["Nǐ", "hǎo!"], displayPool: ["Nǐ", "hǎo!", "Zàijiàn!", "Wǒ"] },
+      { q: "Zàijiàn!", tokens: ["잘", "가", "!"], displayPool: ["잘", "가", "!", "만나서", "반가워"] },
+      { q: "잘 가!", tokens: ["Zàijiàn!"], displayPool: ["Zàijiàn!", "Míngtiān", "jiàn!", "Nǐ"] },
+      { q: "Míngtiān jiàn!", tokens: ["내일", "봐", "!"], displayPool: ["내일", "봐", "!", "오늘", "만나"] },
+      { q: "내일 봐!", tokens: ["Míngtiān", "jiàn!"], displayPool: ["Míngtiān", "jiàn!", "Zàijiàn!", "nín"] },
+      { q: "Lǎoshī nǐ hǎo!", tokens: ["선생님", ",", "안녕하세요", "!"], displayPool: ["선생님", ",", "안녕하세요", "!", "여러분"] },
+      { q: "선생님, 안녕하세요!", tokens: ["Lǎoshī", "nǐ", "hǎo!"], displayPool: ["Lǎoshī", "nǐ", "hǎo!", "dàjiā", "nín"] },
+      { q: "Dàjiā hǎo!", tokens: ["여러분", ",", "안녕하세요", "!"], displayPool: ["여러분", ",", "안녕하세요", "!", "우리들", "나"] },
+      { q: "여러분, 안녕하세요!", tokens: ["Dàjiā", "hǎo!"], displayPool: ["Dàjiā", "hǎo!", "Lǎoshī", "nǐmen"] }
     ],
     exam: [
-      { q: "제3성 성조 뒤에 제3성이 올 때의 성조 변화 규칙은?", choices: ["제1성으로 변한다", "제2성으로 변한다", "제4성으로 변한다", "성조가 없어진다"], answer: "제2성으로 변한다" }
+      { q: "제3성 성조 뒤에 제3성이 연속해서 올 때의 성조 변화 규칙은?", choices: ["제1성으로 변한다", "제2성으로 변한다", "제4성으로 변한다", "성조가 유지된다"], answer: "제2성으로 변한다" },
+      { q: "선생님이나 어른께 정중하게 인사할 때 사용하는 인칭대명사는?", choices: ["nǐ", "nǐmen", "nín", "tā"], answer: "nín" },
+      { q: "다음 중 헤어질 때 나누는 작별 인사 표현이 아닌 문장은?", choices: ["Zàijiàn!", "Míngtiān jiàn!", "Nǐ hǎo!", "Yīhuǐ'er jiàn!"], answer: "Nǐ hǎo!" },
+      { q: "상대방의 고마움 표시인 'Xièxie'에 대응하는 알맞은 대답은?", choices: ["Duìbuqǐ", "Bú xiè", "Méi guānxi", "Míngtiān jiàn"], answer: "Bú xiè" },
+      { q: "상대방의 사과 표현인 'Duìbuqǐ'에 대응하는 알맞은 대답은?", choices: ["Bú kèqi", "Méi guānxi", "Xièxie", "Zàijiàn"], answer: "Méi guānxi" },
+      { q: "중국어 한어병음 표기 시 복운모가 결합했을 때 성조를 붙이는 우선순위가 가장 높은 운모는?", choices: ["i", "o", "e", "a"], answer: "a" },
+      { q: "'nǐ hǎo'를 자연스럽게 이어서 발음할 때 실질적인 성조 변화의 형태는?", choices: ["3성 - 3성", "2성 - 3성", "4성 - 3성", "1성 - 3성"], answer: "2성 - 3성" },
+      { q: "운모 'i' 위에 성조 부호를 표기할 때의 올바른 규칙은?", choices: ["i 위의 점을 그대로 둔다", "i 위의 점을 지우고 표기한다", "i의 오른쪽에 배치한다", "성조를 표기하지 않는다"], answer: "i 위의 점을 지우고 표기한다" },
+      { q: "중국인들이 아침에 일상적으로 나누는 아침 인사 표현은?", choices: ["Wǎn'ān", "Zǎoshang hǎo", "Xiàwǔ hǎo", "Nǐ hǎo ma"], answer: "Zǎoshang hǎo" },
+      { q: "복수를 나타내는 인칭대명사 접미사 'men'의 올바른 성조는?", choices: ["제1성", "제2성", "경성(성조 없음)", "제4성"], answer: "경성(성조 없음)" }
     ]
   },
   3: {
     vocab: [
-      { q: "jiào", choices: ["~라고 부르다", "이름", "무엇", "~이다"], answer: "~라고 부르다" },
-      { q: "shénme", choices: ["어느", "나라", "무엇", "사람"], answer: "무엇" },
-      { q: "guó", choices: ["나라", "사람", "이름", "친구"], answer: "나라" }
+      { q: "jiào", choices: ["~라고 부르다, 이름이 ~이다", "무엇", "이름", "나라"], answer: "~라고 부르다, 이름이 ~이다" },
+      { q: "shénme", choices: ["어느", "무엇", "사람", "누구"], answer: "무엇" },
+      { q: "míngzi", choices: ["글자", "성씨", "나라", "이름"], answer: "이름" },
+      { q: "shì", choices: ["아니다", "~이다, 맞다", "있다", "부르다"], answer: "~이다, 맞다" },
+      { q: "nǎ", choices: ["어느", "무엇", "어디", "그"], answer: "어느" },
+      { q: "guó", choices: ["사람", "도시", "마을", "나라"], answer: "나라" },
+      { q: "rén", choices: ["친구", "사람", "학생", "가족"], answer: "사람" },
+      { q: "Hánguó", choices: ["중국", "일본", "미국", "한국"], answer: "한국" },
+      { q: "de", choices: ["~의, ~한 것(구조조사)", "~구나", "그리고", "매우"], answer: "~의, ~한 것(구조조사)" },
+      { q: "péngyou", choices: ["선생님", "동생", "친구", "부모님"], answer: "친구" },
+      { q: "tā", choices: ["그", "당신", "나", "너"], answer: "그" },
+      { q: "hěn", choices: ["매우, 아주", "진짜", "별로", "전혀"], answer: "매우, 아주" },
+      { q: "shuài", choices: ["귀엽다", "예쁘다", "잘생기다, 멋지다", "크다"], answer: "잘생기다, 멋지다" },
+      { q: "tā", choices: ["당신", "그녀", "그것", "당신"], answer: "그녀" },
+      { q: "piàoliang", choices: ["멋지다", "착하다", "예쁘다", "작다"], answer: "예쁘다" },
+      { q: "Zhōngguó", choices: ["한국", "중국", "일본", "영국"], answer: "중국" }
     ],
     sentence: [
-      { type: 1, q: "Wǒ shì Hánguórén.", tokens: ["나는", "한국인", "입니다", "."], displayPool: ["나는", "한국인", "입니다", ".", "중국인"] },
-      { type: 2, q: "나는 한국인입니다.", tokens: ["Wǒ", "shì", "Hánguórén."], displayPool: ["Wǒ", "shì", "Hánguórén.", "Zhōngguórén", "bú"] },
-      { type: 1, q: "Tā hěn shuài!", tokens: ["그는", "매우", "잘생겼다", "!"], displayPool: ["그는", "매우", "잘생겼다", "!", "그녀는"] }
+      { q: "Wǒ shì Hánguórén.", tokens: ["나는", "한국인", "입니다", "."], displayPool: ["나는", "한국인", "입니다", ".", "중국인"] },
+      { q: "나는 한국인입니다.", tokens: ["Wǒ", "shì", "Hánguórén."], displayPool: ["Wǒ", "shì", "Hánguórén.", "Zhōngguórén", "bú"] },
+      { q: "Tā hěn shuài!", tokens: ["그는", "매우", "잘생겼다", "!"], displayPool: ["그는", "매우", "잘생겼다", "!", "그녀는"] },
+      { q: "그는 매우 잘생겼다!", tokens: ["Tā", "hěn", "shuài!"], displayPool: ["Tā", "hěn", "shuài!", "Tā(그녀)", "piàoliang"] },
+      { q: "Nǐ jiào shénme míngzi?", tokens: ["너는", "이름이", "무엇이니", "?"], displayPool: ["너는", "이름이", "무엇이니", "?", "어느"] },
+      { q: "너의 이름은 무엇이니?", tokens: ["Nǐ", "jiào", "shénme", "míngzi?"], displayPool: ["Nǐ", "jiào", "shénme", "míngzi?", "nǎ", "guó"] },
+      { q: "Nǐ shì nǎ guó rén?", tokens: ["너는", "어느", "나라", "사람이니", "?"], displayPool: ["너는", "어느", "나라", "사람이니", "?", "이름이"] },
+      { q: "너는 어느 나라 사람이니?", tokens: ["Nǐ", "shì", "nǎ", "guó", "rén?"], displayPool: ["Nǐ", "shì", "nǎ", "guó", "rén?", "shénme", "míngzi"] },
+      { q: "Tā  shì wǒ de péngyou.", tokens: ["그녀는", "나의", "친구", "이다", "."], displayPool: ["그녀는", "나의", "친구", "이다", ".", "선생님"] },
+      { q: "그녀는 나의 친구야.", tokens: ["Tā", "shì", "wǒ", "de", "péngyou."], displayPool: ["Tā", "shì", "wǒ", "de", "péngyou.", "lǎoshī"] }
     ],
     exam: [
-      { q: "의문문 너의 이름은 무엇이니 문장 뒤에 ma를 쓰지 않는 올바른 이유는?", choices: ["의문대명사 shénme가 이미 있기 때문에", "원래 문장 끝에 ma를 절대 안 써서", "이름을 물어볼 때는 예외라서", "주어가 nǐ이기 때문에"], answer: "의문대명사 shénme가 이미 있기 때문에" }
+      { q: "이름을 뜻하는 명사 'míngzi'의 올바른 뜻은?", choices: ["성씨", "이름", "나라", "직업"], answer: "이름" },
+      { q: "의문문 문장 구조에서 'shénme'가 쓰였을 때 끝에 'ma'를 붙이지 않는 핵심 요인은?", choices: ["의문대명사 shénme가 문장 속 의문을 이미 나타내서", "원래 의문문 규칙에 예외라서", "주어가 단수 대명사라서", "서술어가 판단동사라서"], answer: "의문대명사 shénme가 문장 속 의문을 이미 나타내서" },
+      { q: "판단 동사 'shì'의 부정 형태이자, 성조 변화 규칙이 적용된 올바른 표현은?", choices: ["bù shì", "bú shì", "méi shì", "bù shì 예외없음"], answer: "bú shì" },
+      { q: "중국어 성상 형용사 문장(예: shuài)에서 주어와 형용사 술어 사이에 습관적으로 배치되는 부사는?", choices: ["bù", "hěn", "shì", "shénme"], answer: "hěn" },
+      { q: "소유(~의)나 수식 관계를 설정해주는 역할을 하는 구조조사는?", choices: ["ma", "ba", "de", "ne"], answer: "de" },
+      { q: "부사 'bù'가 본래 4성인 글자 앞에서 성조 변화를 일으키면 몇 성으로 발음되는가?", choices: ["제1성", "제2성", "제3성", "경성"], answer: "제2성" },
+      { q: "3인칭 여성 단수 대명사 '그녀'를 나타내는 올바른 한자와 한어병음의 조합은?", choices: ["他 (tā)", "她 (tā)", "我 (wǒ)", "你 (nǐ)"], answer: "เธอ (tā)" == " she " ? "我 (wǒ)" : " she " ? "她 (tā)" : "她 (tā)" },
+      { q: "미국(USA)을 뜻하는 고유명사의 정확한 한어병음 표기는?", choices: ["Měiguó", "Yīngguó", "Rìběn", "Fǎguó"], answer: "Měiguó" },
+      { q: "이름을 묻는 질문에 대해 자신의 이름을 대답하는 가장 올바른 동사 구조는?", choices: ["Wǒ 확실히...", "Wǒ jiào...", "Tā shì...", "Nǐ hǎo..."], answer: "Wǒ jiào..." },
+      { q: "한어병음 표기 시 고유명사(예: 국가 이름, 인명 등)의 첫 알파벳 글자는 어떻게 처리하는가?", choices: ["소문자로 쓴다", "대문자로 표기한다", "성조를 생략한다", "기호로 대체한다"], answer: "대문자로 표기한다" }
     ]
   },
   4: {
     vocab: [
-      { q: "shéi", choices: ["무엇", "누구", "어디", "어느 것"], answer: "누구" },
-      { q: "mèimei", choices: ["언니", "여동생", "남동생", "형"], answer: "여동생" },
-      { q: "xiàng", choices: ["닮다", "예쁘다", "크다", "작다"], answer: "닮다" }
+      { q: "shéi", choices: ["무엇", "누구", "어디", "언제"], answer: "누구" },
+      { q: "bàba", choices: ["엄마", "아빠", "형", "누나"], answer: "아빠" },
+      { q: "māma", choices: ["할머니", "아빠", "엄마", "이모"], answer: "엄마" },
+      { q: "gēge", choices: ["남동생", "형, 오빠", "언니", "여동생"], answer: "형, 오빠" },
+      { q: "jiějie", choices: ["누나, 언니", "여동생", "남동생", "형"], answer: "누나, 언니" },
+      { q: "dìdi", choices: ["형", "누나", "남동생", "여동생"], answer: "남동생" },
+      { q: "mèimei", choices: ["언니", "여동생", "형", "남동생"], answer: "여동생" },
+      { q: "xiàng", choices: ["닮다", "바꾸다", "다르다", "똑같다"], answer: "닮다" },
+      { q: "jǐ", choices: ["몇(10 이하의 수)", "얼마나", "누구", "무엇"], answer: "몇(10 이하의 수)" },
+      { q: "suì", choices: ["월", "년", "살, 세", "일"], answer: "살, 세" },
+      { q: "jīnnián", choices: ["작년", "내년", "올해", "내후년"], answer: "올해" },
+      { q: "yǒu", choices: ["없다", "있다, 가지고 있다", "아니다", "~이다"], answer: "있다, 가지고 있다" },
+      { q: "méiyǒu", choices: ["있다", "없다, 가지고 있지 않다", "아니다", "모르다"], answer: "없다, 가지고 있지 않다" },
+      { q: "shàng", choices: ["내리다", "다니다, 오르다", "공부하다", "가다"], answer: "다니다, 오르다" },
+      { q: "niánjí", choices: ["나이", "학교", "학년", "반"], answer: "학년" },
+      { q: "chūzhōng", choices: ["초등학교", "중학교", "고등학교", "대학교"], answer: "중학교" },
+      { q: "zhè", choices: ["저것", "그것", "이것, 이"], answer: "이것, 이" },
+      { q: "shǒujī", choices: ["컴퓨터", "휴대전화", "지갑", "안경"], answer: "휴대전화" }
     ],
     sentence: [
-      { type: 1, q: "Tā shì shéi?", tokens: ["그녀는", "누구니", "?"], displayPool: ["그녀는", "누구니", "?", "내", "동생"] },
-      { type: 2, q: "그녀는 누구니?", tokens: ["Tā", "shì", "shéi?"], displayPool: ["Tā", "shì", "shéi?", "wǒ", "mèimei"] },
-      { type: 1, q: "Tā  shì wǒ mèimei.", tokens: ["그녀는", "내", "여동생이야", "."], displayPool: ["그녀는", "내", "여동생이야", ".", "형이다"] }
+      { q: "Tā  shì shéi?", tokens: ["그녀는", "누구니", "?"], displayPool: ["그녀는", "누구니", "?", "내", "동생"] },
+      { q: "그녀는 누구니?", tokens: ["Tā", "shì", "shéi?"], displayPool: ["Tā", "shì", "shéi?", "wǒ", "mèimei"] },
+      { q: "Tā  shì wǒ mèimei.", tokens: ["그녀는", "내", "여동생이야", "."], displayPool: ["그녀는", "내", "여동생이야", ".", "형이다"] },
+      { q: "그녀는 내 여동생이야.", tokens: ["Tā", "shì", "wǒ", "mèimei."], displayPool: ["Tā", "shì", "wǒ", "mèimei.", "shéi", "shàng"] },
+      { q: "Tā jǐ suì?", tokens: ["그녀는", "몇", "살이야", "?"], displayPool: ["그녀는", "몇", "살이야", "?", "학년", "어디"] },
+      { q: "그녀는 몇 살이야?", tokens: ["Tā", "jǐ", "suì?"], displayPool: ["Tā", "jǐ", "suì?", "duō", "dà"] },
+      { q: "Nǐ  yǒu gēge ma?", tokens: ["너는", "형이", "있니", "?"], displayPool: ["너는", "형이", "있니", "?", "남동생", "없다"] },
+      { q: "너는 형이 있니?", tokens: ["Nǐ", "yǒu", "gēge", "ma?"], displayPool: ["Nǐ", "yǒu", "gēge", "ma?", "méiyǒu", "zhè"] },
+      { q: "Tā shàng jǐ niánjí?", tokens: ["그는", "몇", "학년에", "다니니", "?"], displayPool: ["그는", "몇", "학년에", "다니니", "?", "고등학교"] },
+      { q: "그는 몇 학년에 다니니?", tokens: ["Tā", "shàng", "jǐ", "niánjí?"], displayPool: ["Tā", "shàng", "jǐ", "niánjí?", "gāozhōng", "chūzhōng"] }
     ],
     exam: [
-      { q: "중국어 동사 'yǒu(있다)'의 올바른 부정형 표현은?", choices: ["bù yǒu", "méi yǒu", "bú yǒu", "méi shì"], answer: "méi yǒu" }
+      { q: "소유나 존재를 뜻하는 동사 'yǒu'를 부정할 때 사용하는 올바른 부정부사는?", choices: ["bù", "méi", "bú", "bié"], answer: "méi" },
+      { q: "가족 구성원이나 아주 친밀한 소유 관계를 말할 때 조사 'de'는 대개 어떻게 처리하는가?", choices: ["필수적으로 기입한다", "대개 생략하고 말한다", "문장 끝으로 보낸다", "성조를 4성으로 바꾼다"], answer: "대개 생략하고 말한다" },
+      { q: "보통 10세 이하 어린이를 대상으로 나이를 물어볼 때 결합하는 의문사는?", choices: ["duō dà", "jǐ suì", "shénme", "nǎ guó"], answer: "jǐ suì" },
+      { q: "우리나라의 '중학교'에 해당하는 학급을 나타내는 올바른 한어병음 단어는?", choices: ["xiǎoxué", "chūzhōng", "gāozhōng", "dàxué"], answer: "chūzhōng" },
+      { q: "가족 호칭 중 '남동생'을 가리키는 정확한 한어병음 명사는?", choices: ["gēge", "dìdi", "jiějie", "mèimei"], answer: "dìdi" },
+      { q: "자신과 연배가 비슷하거나 성인 이상인 사람에게 나이를 정중히 물어볼 때 쓰는 의문 구조는?", choices: ["jǐ suì", "duō dà", "shénme", "shéi"], answer: "duō dà" },
+      { q: "'학교나 학년에 다니다'라고 서술할 때 빈칸에 알맞은 동사는? [ wǒ (   ) xué ]", choices: ["shàng", "xià", "huí", "jiào"], answer: "shàng" },
+      { q: "친할아버지와 친할머니를 뜻하는 호칭 명사의 올바른 세트 구성은?", choices: ["bàba - māma", "yéye - nǎinai", "gēge - jiějie", "wáwa - nǎinai"], answer: "yéye - nǎinai" },
+      { q: "가족 구성원이 '몇 명'인지 식구를 셀 때 동사 'yǒu' 뒤에 결합하는 수량 전용 양사는?", choices: ["suì", "kǒu", "hào", "diǎn"], answer: "kǒu" },
+      { q: "가족 구성원 명사 중 '형' 또는 '오빠'를 의미하는 단어는?", choices: ["dìdi", "gēge", "jiějie", "shéi"], answer: "gēge" }
     ]
   },
   5: {
     vocab: [
-      { q: "jīntiān", choices: ["어제", "오늘", "내일", "모레"], answer: "오늘" },
-      { q: "yuè", choices: ["년", "월", "일", "요일"], answer: "월" },
-      { q: "hào", choices: ["월", "일(구어)", "요일", "시간"], answer: "일(구어)" }
+      { q: "jīntiān", choices: ["내일", "오늘", "어제", "올해"], answer: "오늘" },
+      { q: "jǐ", choices: ["몇", "얼마", "누구", "언제"], answer: "몇" },
+      { q: "yuè", choices: ["년", "월", "일", "시"], answer: "월" },
+      { q: "hào", choices: ["월", "일(구어)", "요일", "분"], answer: "일(구어)" },
+      { q: "xīngqī", choices: ["날짜", "시간", "요일", "학년"], answer: "요일" },
+      { q: "xiànzài", choices: ["과거", "미래", "지금, 현재", "오늘"], answer: "지금, 현재" },
+      { q: "diǎn", choices: ["분", "시", "초", "시간"], answer: "시" },
+      { q: "fēn", choices: ["시", "분", "초", "각"], answer: "분" },
+      { q: "bàn", choices: ["15분", "정각", "30분, 반", "45분"], answer: "30분, 반" },
+      { q: "huí jiā", choices: ["집에 가다", "학교에 가다", "수업을 마치다", "일어나다"], answer: "집에 가다" },
+      { q: "qǐchuáng", choices: ["세수하다", "잠자다", "일어나다", "밥 먹다"], answer: "일어나다" },
+      { q: "zuótiān", choices: ["오늘", "어제", "내일", "그저께"], answer: "어제" },
+      { q: "míngtiān", choices: ["오늘", "어제", "내일", "모레"], answer: "내일" },
+      { q: "shēngrì", choices: ["축제", "기념일", "평일", "생일"], answer: "생일" },
+      { q: "kuàilè", choices: ["즐겁다, 행복하다", "슬프다", "아프다", "바쁘다"], answer: "즐겁다, 행복하다" },
+      { q: "shuìjiào", choices: ["일어나다", "밥 먹다", "잠자다", "운동하다"], answer: "잠자다" }
     ],
     sentence: [
-      { type: 1, q: "Jīntiān jǐ yuè jǐ hào?", tokens: ["오늘", "몇 월", "몇 일이야", "?"], displayPool: ["오늘", "몇 월", "몇 일이야", "?", "무슨 요일"] },
-      { type: 2, q: "오늘은 몇 월 몇 일이야?", tokens: ["Jīntiān", "jǐ", "yuè", "jǐ", "hào?"], displayPool: ["Jīntiān", "jǐ", "yuè", "jǐ", "hào?", "xīngqī"] },
-      { type: 1, q: "Xīngqī jǐ?", tokens: ["무슨", "요일이야", "?"], displayPool: ["무슨", "요일이야", "?", "몇 월", "몇 일"] }
+      { q: "Jīntiān jǐ yuè jǐ hào", tokens: ["오늘", "몇 월", "몇 일이야", "?"], displayPool: ["오늘", "몇 월", "몇 일이야", "?", "무슨 요일"] },
+      { q: "오늘은 몇 월 몇 일이야?", tokens: ["Jīntiān", "jǐ", "yuè", "jǐ", "hào?"], displayPool: ["Jīntiān", "jǐ", "yuè", "jǐ", "hào?", "xīngqī"] },
+      { q: "Xīngqī jǐ?", tokens: ["무슨", "요일이야", "?"], displayPool: ["무슨", "요일이야", "?", "몇 월", "몇 일"] },
+      { q: "무슨 요일이야?", tokens: ["Xīngqī", "jǐ?"], displayPool: ["Xīngqī", "jǐ?", "jīntiān", "hào"] },
+      { q: "Xiànzài jǐ diǎn?", tokens: ["지금", "몇 시야", "?"], displayPool: ["지금", "몇 시야", "?", "몇 분", "집에 가"] },
+      { q: "지금 몇 시야?", tokens: ["Xiànzài", "jǐ", "diǎn?"], displayPool: ["Xiànzài", "jǐ", "diǎn?", "liǎng", "huí"] },
+      { q: "Liǎng diǎn èrshí fēn.", tokens: ["2시", "20분", "이야", "."], displayPool: ["2시", "20분", "이야", ".", "èr diǎn", "반"] },
+      { q: "2시 20분이야.", tokens: ["Liǎng", "diǎn", "èrshí", "fēn."], displayPool: ["Liǎng", "diǎn", "èrshí", "fēn.", "Èr", "bàn"] },
+      { q: "Nǐ  jǐ diǎn huí jiā?", tokens: ["너", "몇 시에", "집에 가니", "?"], displayPool: ["너", "몇 시에", "집에 가니", "?", "일어나니", "학교"] },
+      { q: "너 몇 시에 집에 가니?", tokens: ["Nǐ", "jǐ", "diǎn", "huí", "jiā?"], displayPool: ["Nǐ", "jǐ", "diǎn", "huí", "jiā?", "qǐchuáng", "wǒ"] }
     ],
     exam: [
-      { q: "시각 표현에서 시간의 '2시'를 표기할 때 숫자 2(èr) 대신에 사용해야 하는 전용 단어는?", choices: ["èr (二)", "liǎng (两)", "shí (十)", "jǐ (几)"], answer: "liǎng (两)" }
+      { q: "시간 및 시각을 말할 때 수량의 개념인 숫자 '2'를 가리키는 전용 명사는?", choices: ["èr (二)", "liǎng (两)", "shí (十)", "jǐ (几)"], answer: "liǎng (两)" },
+      { q: "날짜의 단위를 나타낼 때 '말할 때(구어)'와 '글로 쓸 때(서면어)'의 쓰임을 순서대로 알맞게 짝지은 것은?", choices: ["구어: rì, 서면어: hào", "구어: hào, 서면어: rì", "구어: yuè, 서면어: hào", "구어: xīngqī, 서면어: rì"], answer: "구어: hào, 서면어: rì" },
+      { q: "요일을 숫자로 매칭하는 중국어 요일 표기 체계에서 '일요일'을 나타낼 수 없는 문장 형태는?", choices: ["Xīngqītiān", "Xīngqīrì", "Xīngqīqī", "둘 다 사용 가능하다"], answer: "Xīngqīqī" },
+      { q: "시각 표현 중 '30분' 분량을 칭할 때 '절반'이라는 한자 의미로 대체할 수 있는 명사는?", choices: ["fēn", "bàn", "kè", "diǎn"], answer: "bàn" },
+      { q: "시각에서 '15분 분량' 단위를 쪼개어 나타낼 때 쓰는 고유 양사 표현은?", choices: ["yí kè", "sān kè", "bàn", "diǎn"], answer: "yí kè" },
+      { q: "'오늘'의 이전 날인 '어제'를 나타내는 올바른 시간사 한어병음 표현은?", choices: ["jīntiān", "zuótiān", "míngtiān", "qiántiān"], answer: "zuótiān" },
+      { q: "요일 명칭 중 '금요일'에 해당하는 정확한 요일 명사 표현의 병음은?", choices: ["Xīngqīyī", "Xīngqīsān", "Xīngqīwǔ", "Xīngqīliù"], answer: "Xīngqīwǔ" },
+      { q: "중국어 문장 구조 내에서 일과나 시간 부사어(예: 8시에)가 놓일 수 있는 올바른 어순 위치는?", choices: ["문장의 맨 뒤 목적어 뒤쪽", "주어의 앞 또는 주어의 바로 뒤(동사 앞)", "동사와 목적어의 정중앙 사이", "아무 곳이나 배치해도 무방함"], answer: "주어의 앞 또는 주어의 바로 뒤(동사 앞)" },
+      { q: "하루 일과 중 '잠을 자다' 행위를 뜻하는 결합어 표현의 병음은?", choices: ["qǐchuáng", "shàngxué", "shuìjiào", "huí jiā"], answer: "shuìjiào" },
+      { q: "상대방에게 생일이 언제인지 날짜를 질문하는 가장 자연스러운 의문문 구조는?", choices: ["Nǐ jǐ suì le?", "Nǐ de shēngrì jǐ xué jǐ hào?", "Nǐ de shēngrì jǐ yuè jǐ hào?", "Nǐ jǐ diǎn huí jiā?"], answer: "Nǐ de shēngrì jǐ yuè jǐ hào?" }
     ]
   }
 };
@@ -440,11 +557,7 @@ function loadQuestion(){
     
     if(currentType === "sentence") {
       selectedTokens = [];
-      if(q.type === 1) {
-        descEl.innerText = "💡 문장의 뜻에 맞게 아래 단어 카드를 순서대로 클릭하세요.";
-      } else {
-        descEl.innerText = "💡 뜻을 보고 중국어 문장 구조에 맞게 카드를 순서대로 클릭하세요.";
-      }
+      descEl.innerText = "💡 뜻과 문장 구조에 맞게 하단의 단어 카드를 올바른 순서대로 클릭하여 완성하세요.";
 
       let pool = [...q.displayPool];
       q.tokens.forEach(t => { if(!pool.includes(t)) pool.push(t); });
@@ -466,10 +579,9 @@ function loadQuestion(){
       });
       
     } else {
-      descEl.innerText = "💡 알맞은 정답을 선택하세요.";
+      descEl.innerText = "💡 보기를 읽고 알맞은 정답을 하나 선택하세요.";
       let html = `<div class="choices">`;
       q.choices.forEach(choice => {
-        // 이스케이프 안전 처리
         const safeChoice = choice.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         html += `
           <button class="choice" onclick="checkAnswer('${safeChoice}')">
@@ -534,9 +646,9 @@ function checkSentenceAnswer() {
   }
   
   if(isCorrect) {
-    showResult(true, "🎉 정답입니다! 올바른 문장을 완성했어요.");
+    showResult(true, "🎉 정답입니다! 문장의 구조를 정확하게 이해하셨네요.");
   } else {
-    showResult(false, `❌ 오답! 정답: ${q.tokens.join(" ")}`);
+    showResult(false, `❌ 오답! 올바른 순서: [ ${q.tokens.join(" ")} ]`);
   }
 }
 
@@ -545,7 +657,7 @@ function checkAnswer(choice){
   if(choice === q.answer){
     showResult(true, "🎉 정답입니다!");
   } else {
-    showResult(false, `❌ 오답! 정답: ${q.answer}`);
+    showResult(false, `❌ 오답! 정답은 [ ${q.answer} ] 입니다.`);
   }
 }
 
@@ -568,7 +680,7 @@ function nextQuestion(){
 
   if(current >= questions.length){
     setTimeout(() => {
-      alert("🏆 완료! 해당 섹션을 모두 마쳤습니다.");
+      alert("🏆 축하합니다! 해당 유닛의 학습 평가 문항을 모두 완료했습니다.");
       goHome();
     }, 300);
     return;
