@@ -180,17 +180,34 @@
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 28px;
+  font-size: 24px; /* 원래 28px에서 이모지가 안 깨질 정도로만 살짝 줄임 */
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 5px 0 rgba(0,0,0,.15);
-  transition: transform 0.1s ease, box-shadow 0.1s ease; /* 빠른 반응 속도 */
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
   text-decoration: none;
   user-select: none;
+  
+  /* 원 밖으로 글자가 절대 탈출하지 못하도록 방어 */
+  overflow: hidden;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 4px;
+}
+
+.node span { 
+  font-size: 11px; /* 원래 12px에서 가독성 유지하며 축소 */
+  margin-top: 3px; 
+  font-weight: bold; 
+  white-space: nowrap; /* 글자가 밑으로 쪼개져서 두 줄 안 되게 강제 고정 */
+  word-break: keep-all;
+  max-width: 80px; /* 원 내부 가로폭 제한 */
+  overflow: hidden;
+  text-overflow: ellipsis; /* 혹시나 넘치면 ... 처리 (안전장치) */
 }
 
 .node:active { 
-  transform: translateY(4px); /* 커지지 않고 아래로만 쏙 들어감 */
+  transform: translateY(4px); 
   box-shadow: 0 1px 0 rgba(0,0,0,.15);
 }
 
