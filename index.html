@@ -80,26 +80,29 @@
     transform: rotate(180deg);
   }
 
-  /* 부드러운 드롭다운 애니메이션 패널 */
-  .dropdown-panel {
-    max-height: 0;
-    overflow: hidden;
-    background: #fafafa;
-    border-bottom: 0 solid #e5e5e5;
-    transition: max-height 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
-                padding 0.35s cubic-bezier(0.25, 1, 0.5, 1),
-                border-bottom 0.2s ease;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+/* 기존 .dropdown-panel과 .dropdown-panel.show를 찾아서 아래 코드로 완전히 교체하세요 */
+.dropdown-panel {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-20px); /* 위에서 아래로 살짝 내려오는 느낌 추가 */
+  visibility: hidden;
+  background: #fafafa;
+  border-bottom: 0 solid #e5e5e5;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); /* 가속도 최적화 */
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-  .dropdown-panel.show {
-    max-height: 500px; 
-    padding: 20px;
-    border-bottom: 2px solid #e5e5e5;
-  }
+.dropdown-panel.show {
+  max-height: 500px; /* 트리거용 값 유지 */
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  padding: 20px;
+  border-bottom: 2px solid #e5e5e5;
+}
 
   .panel-columns-grid {
     display: grid;
@@ -168,28 +171,33 @@
     padding-bottom:60px;
   }
 
-  .node {
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    font-size:28px;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 5px 0 rgba(0,0,0,.15);
-    transition: transform 0.1s;
-    text-decoration: none;
-    user-select: none;
-  }
+  /* 기존 .node 와 .node:active 를 찾아서 대체하세요 */
+.node {
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:28px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 5px 0 rgba(0,0,0,.15);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease; /* 튕기는 듯한 탄성 효과 */
+  text-decoration: none;
+  user-select: none;
+}
 
-  .node:active { transform: scale(0.95); }
-  .node span{ font-size:12px; margin-top:5px; font-weight: bold; }
-  .right{ transform:translateX(65px); }
-  .right:active { transform: translateX(65px) scale(0.95); }
+.node:active { 
+  transform: scale(0.92) translateY(3px); /* 누를 때 쫀득하게 눌리는 느낌 */
+  box-shadow: 0 2px 0 rgba(0,0,0,.15);
+}
+
+/* 우측 정렬 노드 전용 */
+.right { transform: translateX(65px); }
+.right:active { transform: translateX(65px) scale(0.92) translateY(3px); }
 
   .vocab{ background:#58cc02; }
   .sentence{ background:#1cb0f6; }
@@ -222,6 +230,17 @@
   #resultBox button{ width:100%; height:54px; border:none; border-radius:16px; font-size:17px; font-weight:700; cursor:pointer; margin-top:15px; background: white; color: black; box-shadow: 0 4px 0 rgba(0,0,0,0.1); }
   #resultBox button:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
   .resultTitle{ font-size:20px; font-weight:bold; word-break: keep-all; line-height: 1.4; }
+/* 퀴즈 문제 글자 전환용 부드러운 트랜지션 효과 */
+.question {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.question.fadeOut {
+  opacity: 0;
+  transform: translateY(-5px); /* 사라질 때 위로 살짝 올라가는 느낌 */
+}
 </style>
 </head>
 <body>
