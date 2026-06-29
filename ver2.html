@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DUONGORINGO</title>
+
+<style>
+  body{
+    margin:0;
+    background:#f7f7f7;
+    font-family:sans-serif;
+    color: #3c3c3c;
+  }
+
+  .app-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1{
+    text-align:center;
+    padding: 25px 20px 5px 20px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 28px;
+  }
+
+  h5{
+    text-align:center;
+    padding:5px;
+    margin: 0 0 20px 0;
+    color: #aaa;
+    font-size: 14px;
+  }
+
+  .custom-header {
+    background: white;
+    border-bottom: 2px solid #e5e5e5;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .selector-btn {
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #e5e5e5;
+    border-radius: 16px;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #e5e5e5;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .selector-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #e5e5e5;
+  }
+
+  .arrow-icon {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    font-size: 12px;
+    color: #afafaf;
+  }
+
+  .selector-btn.open .arrow-icon {
+    transform: rotate(180deg);
+  }
+
+  /* 부드러운 드롭다운 애니메이션 패널 */
+  .dropdown-panel {
+    max-height: 0;
+    overflow: hidden;
+    background: #fafafa;
+    border-bottom: 0 solid #e5e5e5;
+    transition: max-height 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
+                padding 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                border-bottom 0.2s ease;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .dropdown-panel.show {
+    max-height: 500px; 
+    padding: 20px;
+    border-bottom: 2px solid #e5e5e5;
+  }
+
+  .panel-columns-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .panel-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .panel-column label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #999;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .panel-item {
+    padding: 12px 6px;
+    border: 2px solid #e5e5e5;
+    border-radius: 14px;
+    background: white;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 0 #e5e5e5;
+    user-select: none;
+    word-break: keep-all;
+  }
+
+  .panel-item:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 #e5e5e5;
+  }
+
+  .panel-item.active {
+    border-color: #1cb0f6;
+    color: #1cb0f6;
+    background: #f3faff;
+    box-shadow: 0 2px 0 #1cb0f6;
+  }
+
+  /* 단원 노드 트리 디자인 */
+  .unit-divider{
+    margin: 30px 20px 20px 20px;
+    text-align:center;
+    font-size: 18px;
+    font-weight:bold;
+    border-top:3px solid #f0f0f0;
+    padding-top:20px;
+    color: #4b4b4b;
+  }
+
+  .path{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:25px;
+    padding-bottom:60px;
+  }
+
+  .node {
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:28px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 5px 0 rgba(0,0,0,.15);
+    transition: transform 0.1s;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .node:active { transform: scale(0.95); }
+  .node span{ font-size:12px; margin-top:5px; font-weight: bold; }
+  .right{ transform:translateX(65px); }
+  .right:active { transform: translateX(65px) scale(0.95); }
+
+  .vocab{ background:#58cc02; }
+  .sentence{ background:#1cb0f6; }
+  .exam{ background:#ce82ff; }
+
+  /* 퀴즈 박스 스타일 */
+  .topbar{ display:flex; align-items:center; padding:20px; gap:15px; }
+  .topbar button{ border:none; background:none; font-size:25px; cursor:pointer; color: #afafaf; font-weight: bold; }
+  .topbar button:hover { color: #3c3c3c; }
+  .progress{ flex:1; height:16px; background:#e5e5e5; border-radius:30px; overflow:hidden; }
+  #bar{ width:0%; height:100%; background:#58cc02; transition:width .3s ease; }
+  
+  #quizTitle{ text-align:center; margin: 10px 0; color: #aaa; font-size: 14px; font-weight: bold; letter-spacing: 1px;}
+  .question{ font-size:24px; font-weight:bold; text-align:center; margin:25px 0 15px 0; padding: 0 20px; word-break: keep-all; line-height: 1.5; }
+  .quiz-desc { text-align: center; color: #777; font-size: 14px; margin-bottom: 25px; padding: 0 24px; word-break: keep-all; }
+  
+  .sentence-area { min-height: 90px; margin: 20px; padding: 15px; border: 2px dashed #ccc; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; background: #fafafa; border-radius: 16px; }
+  .word-pool { margin: 25px 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  
+  .card { padding: 12px 18px; background: white; border: 2px solid #e5e5e5; border-radius: 14px; font-size: 16px; font-weight: bold; cursor:pointer; box-shadow: 0 3px 0 #e5e5e5; transition: all 0.1s; user-select: none; }
+  .card:active { transform: translateY(2px); box-shadow: 0 1px 0 #e5e5e5; }
+  .card.used { opacity: 0.15; cursor: default; pointer-events: none; }
+  
+  .choices{ padding:20px; display:grid; gap:12px; }
+  .choice{ padding:18px 22px; border:2px solid #e5e5e5; border-radius:16px; background:white; font-size:17px; font-weight: bold; cursor:pointer; transition: all 0.1s; text-align: left; box-shadow: 0 3px 0 #e5e5e5; }
+  .choice:active{ transform:translateY(2px); box-shadow: 0 1px 0 #e5e5e5; border-color: #aaa; }
+
+  #resultBox{ padding:24px; text-align:center; color:white; border-radius:20px; margin: 20px; display: none; }
+  #resultBox.show{ display: block; }
+  #resultBox button{ width:100%; height:54px; border:none; border-radius:16px; font-size:17px; font-weight:700; cursor:pointer; margin-top:15px; background: white; color: black; box-shadow: 0 4px 0 rgba(0,0,0,0.1); }
+  #resultBox button:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
+  .resultTitle{ font-size:20px; font-weight:bold; word-break: keep-all; line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  
+  <div id="home">
+    <h1>DUONGORINGO</h1>
+    <h5>made by 2than</h5>
+
+    <div class="custom-header">
+      <button class="selector-btn" id="selectorBtn" onclick="toggleDropdown()">
+        <span id="currentSubjectIcon">🇨🇳</span> 
+        <span id="currentSelectionText">중국어 · 중학 · 미래엔 우치갑 15개정</span> 
+        <span class="arrow-icon">▼</span>
+      </button>
+    </div>
+
+    <div class="dropdown-panel" id="dropdownPanel">
+      <div class="panel-columns-grid">
+        <div class="panel-column">
+          <label>과목</label>
+          <div id="subjectGroup"></div>
+        </div>
+        <div class="panel-column">
+          <label>학년 과정</label>
+          <div id="gradeGroup"></div>
+        </div>
+        <div class="panel-column">
+          <label>출판사</label>
+          <div id="publisherGroup"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="unitContainer"></div>
+  </div>
+
+  <div id="quiz" style="display:none;">
+    <div class="topbar">
+      <button onclick="goHome()">✕</button>
+      <div class="progress">
+        <div id="bar"></div>
+      </div>
+    </div>
+
+    <div id="quizTitle"></div>
+    <div class="question"></div>
+    <div class="quiz-desc" id="quizDesc"></div>
+    
+    <div id="quizContent"></div>
+    <div id="resultBox"></div>
+  </div>
+
+</div>
+
+<script>
+// 과목별 고유 텍스트 명칭 및 아이콘 지정 정의
+const subjectMeta = {
+  chinese: { name: "중국어", icon: "🇨🇳" },
+  science: { name: "과학", icon: "🧬" }
+};
+
+const gradeMeta = {
+  midthr: "중등 3",
+    //high: "고등"
+};
+
+const publisherMeta = {
+  miraeuh: "미래엔 우치갑 15개정",
+  visangihm: "비상 임태훈 15개정"
+};
+
+// 과목별로 완전 격리된 실제 교과 데이터셋 구조
+const quizData = {
+  chinese: {
+    midthr: {
+      miraeuh: {
+        2: {
+            vocab: [
+            { q: "hǎo", choices: ["안녕하세요, 좋다", "선생님", "내일 봐", "여러분"], answer: "안녕하세요, 좋다" },
+            { q: "nǐ", choices: ["나", "너, 당신", "그", "그녀"], answer: "너, 당신" },
+            { q: "zàijiàn", choices: ["안녕하세요", "미안합니다", "또 만납시다, 잘 가", "감사합니다"], answer: "또 만납시다, 잘 가" },
+            { q: "míngtiān", choices: ["오늘", "어제", "내일", "모레"], answer: "내일" },
+            { q: "jiàn", choices: ["보다, 만나다", "말하다", "듣다", "가다"], answer: "보다, 만나다" },
+            { q: "wǒ", choices: ["너", "나", "그", "우리"], answer: "나" },
+            { q: "lǎoshī", choices: ["학생", "의사", "선생님", "경찰"], answer: "선생님" },
+            { q: "nín", choices: ["너(평칭)", "당신, 어르신(존칭)", "그들", "너희들"], answer: "당신, 어르신(존칭)" },
+            { q: "nǐmen", choices: ["너희들", "우리들", "그들", "여러분"], answer: "너희들" },
+            { q: "dàjiā", choices: ["가족", "친구", "여러분, 모두", "동료"], answer: "여러분, 모두" },
+            { q: "xièxie", choices: ["미안합니다", "괜찮습니다", "천만에요", "감사합니다"], answer: "감사합니다" },
+            { q: "bú xiè", choices: ["별말씀을요, 천만에요", "고맙습니다", "미안합니다", "잘 가"], answer: "별말씀을요, 천만에요" },
+            { q: "bú kèqi", choices: ["천만에요, 사양하지 마세요", "실례합니다", "안녕하세요", "괜찮습니다"], answer: "천만에요, 사양하지 마세요" },
+            { q: "duìbuqǐ", choices: ["괜찮습니다", "미안합니다", "감사합니다", "축하합니다"], answer: "미안합니다" },
+            { q: "méi guānxi", choices: ["미안합니다", "알겠습니다", "괜찮습니다", "상관없습니다"], answer: "괜찮습니다" }
+            ],
+            sentence: [
+            { q: "Nǐ hǎo!", tokens: ["안녕", "!"], displayPool: ["안녕", "!", "잘 가", "내일 봐"] },
+            { q: "안녕!", tokens: ["Nǐ", "hǎo!"], displayPool: ["Nǐ", "hǎo!", "Zàijiàn!", "Wǒ"] },
+            { q: "Zàijiàn!", tokens: ["잘", "가", "!"], displayPool: ["잘", "가", "!", "만나서", "반가워"] },
+            { q: "잘 가!", tokens: ["Zàijiàn!"], displayPool: ["Zàijiàn!", "Míngtiān", "jiàn!", "Nǐ"] },
+            { q: "Míngtiān jiàn!", tokens: ["내일", "봐", "!"], displayPool: ["내일", "봐", "!", "오늘", "만나"] },
+            { q: "내일 봐!", tokens: ["Míngtiān", "jiàn!"], displayPool: ["Míngtiān", "jiàn!", "Zàijiàn!", "nín"] },
+            { q: "Lǎoshī hǎo!", tokens: ["선생님", ",", "안녕하세요", "!"], displayPool: ["선생님", ",", "안녕하세요", "!", "여러분"] },
+            { q: "선생님, 안녕하세요!", tokens: ["Lǎoshī", "hǎo!"], displayPool: ["Lǎoshī", "nǐ", "hǎo!", "dàjiā", "nín"] },
+            { q: "Dàjiā hǎo!", tokens: ["여러분", ",", "안녕하세요", "!"], displayPool: ["여러분", ",", "안녕하세요", "!", "우리들", "나"] },
+            { q: "여러분, 안녕하세요!", tokens: ["Dàjiā", "hǎo!"], displayPool: ["Dàjiā", "hǎo!", "Lǎoshī", "nǐmen"] }
+            ],
+            exam: [
+            { q: "제3성 성조 뒤에 제3성이 연속해서 올 때의 성조 변화 규칙은?", choices: ["제1성으로 변한다", "제2성으로 변한다", "제4성으로 변한다", "성조가 유지된다"], answer: "제2성으로 변한다" },
+            { q: "선생님이나 어른께 정중하게 인사할 때 사용하는 인칭대명사는?", choices: ["nǐ", "nǐmen", "nín", "tā"], answer: "nín" },
+            { q: "다음 중 헤어질 때 나누는 작별 인사 표현이 아닌 문장은?", choices: ["Zàijiàn!", "Míngtiān jiàn!", "Nǐ hǎo!", "Yīhuǐ'er jiàn!"], answer: "Nǐ hǎo!" },
+            { q: "상대방의 고마움 표시인 'Xièxie'에 대응하는 알맞은 대답은?", choices: ["Duìbuqǐ", "Bú xiè", "Méi guānxi", "Míngtiān jiàn"], answer: "Bú xiè" },
+            { q: "상대방의 사과 표현인 'Duìbuqǐ'에 대응하는 알맞은 대답은?", choices: ["Bú kèqi", "Méi guānxi", "Xièxie", "Zàijiàn"], answer: "Méi guānxi" },
+            { q: "중국어 한어병음 표기 시 복운모가 결합했을 때 성조를 붙이는 우선순위가 가장 높은 운모는?", choices: ["i", "o", "e", "a"], answer: "a" },
+            { q: "'nǐ hǎo'를 자연스럽게 이어서 발음할 때 실질적인 성조 변화의 형태는?", choices: ["3성 - 3성", "2성 - 3성", "4성 - 3성", "1성 - 3성"], answer: "2성 - 3성" },
+            { q: "운모 'i' 위에 성조 부호를 표기할 때의 올바른 규칙은?", choices: ["i 위의 점을 그대로 둔다", "i 위의 점을 지우고 표기한다", "i의 오른쪽에 배치한다", "성조를 표기하지 않는다"], answer: "i 위의 점을 지우고 표기한다" },
+            { q: "복수를 나타내는 인칭대명사 접미사 'men'의 올바른 성조는?", choices: ["제1성", "제2성", "경성(성조 없음)", "제4성"], answer: "경성(성조 없음)" }
+            ]
+        },
+        3: {
+            vocab: [
+            { q: "jiào", choices: ["~라고 부르다, 이름이 ~이다", "무엇", "이름", "나라"], answer: "~라고 부르다, 이름이 ~이다" },
+            { q: "shénme", choices: ["어느", "무엇", "사람", "누구"], answer: "무엇" },
+            { q: "míngzi", choices: ["글자", "성씨", "나라", "이름"], answer: "이름" },
+            { q: "shì", choices: ["아니다", "~이다, 맞다", "있다", "부르다"], answer: "~이다, 맞다" },
+            { q: "nǎ", choices: ["어느", "무엇", "어디", "그"], answer: "어느" },
+            { q: "guó", choices: ["사람", "도시", "마을", "나라"], answer: "나라" },
+            { q: "rén", choices: ["친구", "사람", "학생", "가족"], answer: "사람" },
+            { q: "Hánguó", choices: ["중국", "일본", "미국", "한국"], answer: "한국" },
+            { q: "de", choices: ["~의, ~한 것(구조조사)", "~구나", "그리고", "매우"], answer: "~의, ~한 것(구조조사)" },
+            { q: "péngyou", choices: ["선생님", "동생", "친구", "부모님"], answer: "친구" },
+            { q: "tā", choices: ["그", "당신", "나", "너"], answer: "그" },
+            { q: "hěn", choices: ["매우, 아주", "진짜", "별로", "전혀"], answer: "매우, 아주" },
+            { q: "shuài", choices: ["귀엽다", "예쁘다", "잘생기다, 멋지다", "크다"], answer: "잘생기다, 멋지다" },
+            { q: "tā", choices: ["당신", "그녀", "그것", "당신"], answer: "그녀" },
+            { q: "piàoliang", choices: ["멋지다", "착하다", "예쁘다", "작다"], answer: "예쁘다" },
+            { q: "Zhōngguó", choices: ["한국", "중국", "일본", "영국"], answer: "중국" }
+            ],
+            sentence: [
+            { q: "Wǒ shì Hánguórén.", tokens: ["나는", "한국인", "입니다", "."], displayPool: ["나는", "한국인", "입니다", ".", "중국인"] },
+            { q: "나는 한국인입니다.", tokens: ["Wǒ", "shì", "Hánguórén."], displayPool: ["Wǒ", "shì", "Hánguórén.", "Zhōngguórén", "bú"] },
+            { q: "Tā hěn shuài!", tokens: ["그는", "매우", "잘생겼다", "!"], displayPool: ["그는", "매우", "잘생겼다", "!", "그녀는"] },
+            { q: "그는 매우 잘생겼다!", tokens: ["Tā", "hěn", "shuài!"], displayPool: ["Tā", "hěn", "shuài!", "Tā(그녀)", "piàoliang"] },
+            { q: "Nǐ jiào shénme míngzi?", tokens: ["너는", "이름이", "무엇이니", "?"], displayPool: ["너는", "이름이", "무엇이니", "?", "어느"] },
+            { q: "너의 이름은 무엇이니?", tokens: ["Nǐ", "jiào", "shénme", "míngzi?"], displayPool: ["Nǐ", "jiào", "shénme", "míngzi?", "nǎ", "guó"] },
+            { q: "Nǐ shì nǎ guó rén?", tokens: ["너는", "어느", "나라", "사람이니", "?"], displayPool: ["너는", "어느", "나라", "사람이니", "?", "이름이"] },
+            { q: "너는 어느 나라 사람이니?", tokens: ["Nǐ", "shì", "nǎ", "guó", "rén?"], displayPool: ["Nǐ", "shì", "nǎ", "guó", "rén?", "shénme", "míngzi"] },
+            { q: "Tā  shì wǒ de péngyou.", tokens: ["그녀는", "나의", "친구", "이다", "."], displayPool: ["그녀는", "나의", "친구", "이다", ".", "선생님"] },
+            { q: "그녀는 나의 친구야.", tokens: ["Tā", "shì", "wǒ", "de", "péngyou."], displayPool: ["Tā", "shì", "wǒ", "de", "péngyou.", "lǎoshī"] }
+            ],
+            exam: [
+            { q: "이름을 뜻하는 명사 'míngzi'의 올바른 뜻은?", choices: ["성씨", "이름", "나라", "직업"], answer: "이름" },
+            { q: "의문문 문장 구조에서 'shénme'가 쓰였을 때 끝에 'ma'를 붙이지 않는 핵심 요인은?", choices: ["의문대명사 shénme가 문장 속 의문을 이미 나타내서", "원래 의문문 규칙에 예외라서", "주어가 단수 대명사라서", "서술어가 판단동사라서"], answer: "의문대명사 shénme가 문장 속 의문을 이미 나타내서" },
+            { q: "판단 동사 'shì'의 부정 형태이자, 성조 변화 규칙이 적용된 올바른 표현은?", choices: ["bù shì", "bú shì", "méi shì", "bù shì 예외없음"], answer: "bú shì" },
+            { q: "중국어 성상 형용사 문장(예: shuài)에서 주어와 형용사 술어 사이에 습관적으로 배치되는 부사는?", choices: ["bù", "hěn", "shì", "shénme"], answer: "hěn" },
+            { q: "소유(~의)나 수식 관계를 설정해주는 역할을 하는 구조조사는?", choices: ["ma", "ba", "de", "ne"], answer: "de" },
+            { q: "부사 'bù'가 본래 4성인 글자 앞에서 성조 변화를 일으키면 몇 성으로 발음되는가?", choices: ["제1성", "제2성", "제3성", "경성"], answer: "제2성" },
+            { q: "미국(USA)을 뜻하는 고유명사의 정확한 한어병음 표기는?", choices: ["Měiguó", "Yīngguó", "Rìběn", "Fǎguó"], answer: "Měiguó" },
+            { q: "이름을 묻는 질문에 대해 자신의 이름을 대답하는 가장 올바른 동사 구조는?", choices: ["Wǒ 확실히...", "Wǒ jiào...", "Tā shì...", "Nǐ hǎo..."], answer: "Wǒ jiào..." },
+            { q: "한어병음 표기 시 고유명사(예: 국가 이름, 인명 등)의 첫 알파벳 글자는 어떻게 처리하는가?", choices: ["소문자로 쓴다", "대문자로 표기한다", "성조를 생략한다", "기호로 대체한다"], answer: "대문자로 표기한다" }
+            ]
+        },
+        4: {
+            vocab: [
+            { q: "shéi", choices: ["무엇", "누구", "어디", "언제"], answer: "누구" },
+            { q: "bàba", choices: ["엄마", "아빠", "형", "누나"], answer: "아빠" },
+            { q: "māma", choices: ["할머니", "아빠", "엄마", "이모"], answer: "엄마" },
+            { q: "gēge", choices: ["남동생", "형, 오빠", "언니", "여동생"], answer: "형, 오빠" },
+            { q: "jiějie", choices: ["누나, 언니", "여동생", "남동생", "형"], answer: "누나, 언니" },
+            { q: "dìdi", choices: ["형", "누나", "남동생", "여동생"], answer: "남동생" },
+            { q: "mèimei", choices: ["언니", "여동생", "형", "남동생"], answer: "여동생" },
+            { q: "xiàng", choices: ["닮다", "바꾸다", "다르다", "똑같다"], answer: "닮다" },
+            { q: "jǐ", choices: ["몇(10 이하의 수)", "얼마나", "누구", "무엇"], answer: "몇(10 이하의 수)" },
+            { q: "suì", choices: ["월", "년", "살, 세", "일"], answer: "살, 세" },
+            { q: "jīnnián", choices: ["작년", "내년", "올해", "내후년"], answer: "올해" },
+            { q: "yǒu", choices: ["없다", "있다, 가지고 있다", "아니다", "~이다"], answer: "있다, 가지고 있다" },
+            { q: "méiyǒu", choices: ["있다", "없다, 가지고 있지 않다", "아니다", "모르다"], answer: "없다, 가지고 있지 않다" },
+            { q: "shàng", choices: ["내리다", "다니다, 오르다", "공부하다", "가다"], answer: "다니다, 오르다" },
+            { q: "niánjí", choices: ["나이", "학교", "학년", "반"], answer: "학년" },
+            { q: "chūzhōng", choices: ["초등학교", "중학교", "고등학교", "대학교"], answer: "중학교" },
+            { q: "zhè", choices: ["저것", "그것", "이것, 이"], answer: "이것, 이" },
+            { q: "shǒujī", choices: ["컴퓨터", "휴대전화", "지갑", "안경"], answer: "휴대전화" }
+            ],
+            sentence: [
+            { q: "Tā  shì shéi?", tokens: ["그녀는", "누구니", "?"], displayPool: ["그녀는", "누구니", "?", "내", "동생"] },
+            { q: "그녀는 누구니?", tokens: ["Tā", "shì", "shéi?"], displayPool: ["Tā", "shì", "shéi?", "wǒ", "mèimei"] },
+            { q: "Tā  shì wǒ mèimei.", tokens: ["그녀는", "내", "여동생이야", "."], displayPool: ["그녀는", "내", "여동생이야", ".", "형이다"] },
+            { q: "그녀는 내 여동생이야.", tokens: ["Tā", "shì", "wǒ", "mèimei."], displayPool: ["Tā", "shì", "wǒ", "mèimei.", "shéi", "shàng"] },
+            { q: "Tā jǐ suì?", tokens: ["그녀는", "몇", "살이야", "?"], displayPool: ["그녀는", "몇", "살이야", "?", "학년", "어디"] },
+            { q: "그녀는 몇 살이야?", tokens: ["Tā", "jǐ", "suì?"], displayPool: ["Tā", "jǐ", "suì?", "duō", "dà"] },
+            { q: "Nǐ  yǒu gēge ma?", tokens: ["너는", "형이", "있니", "?"], displayPool: ["너는", "형이", "있니", "?", "남동생", "없다"] },
+            { q: "너는 형이 있니?", tokens: ["Nǐ", "yǒu", "gēge", "ma?"], displayPool: ["Nǐ", "yǒu", "gēge", "ma?", "méiyǒu", "zhè"] },
+            { q: "Tā shàng jǐ niánjí?", tokens: ["그는", "몇", "학년에", "다니니", "?"], displayPool: ["그는", "몇", "학년에", "다니니", "?", "고등학교"] },
+            { q: "그는 몇 학년에 다니니?", tokens: ["Tā", "shàng", "jǐ", "niánjí?"], displayPool: ["Tā", "shàng", "jǐ", "niánjí?", "gāozhōng", "chūzhōng"] }
+            ],
+            exam: [
+            { q: "소유나 존재를 뜻하는 동사 'yǒu'를 부정할 때 사용하는 올바른 부정부사는?", choices: ["bù", "méi", "bú", "bié"], answer: "méi" },
+            { q: "가족 구성원이나 아주 친밀한 소유 관계를 말할 때 조사 'de'는 대개 어떻게 처리하는가?", choices: ["필수적으로 기입한다", "대개 생략하고 말한다", "문장 끝으로 보낸다", "성조를 4성으로 바꾼다"], answer: "대개 생략하고 말한다" },
+            { q: "보통 10세 이하 어린이를 대상으로 나이를 물어볼 때 결합하는 의문사는?", choices: ["duō dà", "jǐ suì", "shénme", "nǎ guó"], answer: "jǐ suì" },
+            { q: "우리나라의 '중학교'에 해당하는 학급을 나타내는 올바른 한어병음 단어는?", choices: ["xiǎoxué", "chūzhōng", "gāozhōng", "dàxué"], answer: "chūzhōng" },
+            { q: "가족 호칭 중 '남동생'을 가리키는 정확한 한어병음 명사는?", choices: ["gēge", "dìdi", "jiějie", "mèimei"], answer: "dìdi" },
+            { q: "자신과 연배가 비슷하거나 성인 이상인 사람에게 나이를 정중히 물어볼 때 쓰는 의문 구조는?", choices: ["jǐ suì", "duō dà", "shénme", "shéi"], answer: "duō dà" },
+            { q: "'학교나 학년에 다니다'라고 서술할 때 빈칸에 알맞은 동사는? [ wǒ (   ) xué ]", choices: ["shàng", "xià", "huí", "jiào"], answer: "shàng" },
+            { q: "친할아버지와 친할머니를 뜻하는 호칭 명사의 올바른 세트 구성은?", choices: ["bàba - māma", "yéye - nǎinai", "gēge - jiějie", "wáwa - nǎinai"], answer: "yéye - nǎinai" },
+            { q: "가족 구성원 명사 중 '형' 또는 '오빠'를 의미하는 단어는?", choices: ["dìdi", "gēge", "jiějie", "shéi"], answer: "gēge" }
+            ]
+        },
+        5: {
+            vocab: [
+            { q: "jīntiān", choices: ["내일", "오늘", "어제", "올해"], answer: "오늘" },
+            { q: "jǐ", choices: ["몇", "얼마", "누구", "언제"], answer: "몇" },
+            { q: "yuè", choices: ["년", "월", "일", "시"], answer: "월" },
+            { q: "hào", choices: ["월", "일(구어)", "요일", "분"], answer: "일(구어)" },
+            { q: "xīngqī", choices: ["날짜", "시간", "요일", "학년"], answer: "요일" },
+            { q: "zuótiān", choices: ["오늘", "어제", "내일", "그저께"], answer: "어제" },
+            { q: "míngtiān", choices: ["오늘", "어제", "내일", "모레"], answer: "내일" },
+            { q: "shēngrì", choices: ["축제", "기념일", "평일", "생일"], answer: "생일" }
+            ],
+            sentence: [
+            { q: "Jīntiān jǐ yuè jǐ hào", tokens: ["오늘", "몇 월", "몇 일이야", "?"], displayPool: ["오늘", "몇 월", "몇 일이야", "?", "무슨 요일"] },
+            { q: "오늘은 몇 월 몇 일이야?", tokens: ["Jīntiān", "jǐ", "yuè", "jǐ", "hào?"], displayPool: ["Jīntiān", "jǐ", "yuè", "jǐ", "hào?", "xīngqī"] },
+            { q: "Xīngqī jǐ?", tokens: ["무슨", "요일이야", "?"], displayPool: ["무슨", "요일이야", "?", "몇 월", "몇 일"] },
+            { q: "무슨 요일이야?", tokens: ["Xīngqī", "jǐ?"], displayPool: ["Xīngqī", "jǐ?", "jīntiān", "hào"] }    
+            ],
+            exam: [
+            { q: "시간 및 시각을 말할 때 수량의 개념인 숫자 '2'를 가리키는 전용 명사는?", choices: ["èr (二)", "liǎng (两)", "shí (十)", "jǐ (几)"], answer: "liǎng (两)" },
+            { q: "날짜의 단위를 나타낼 때 '말할 때(구어)'와 '글로 쓸 때(서면어)'의 쓰임을 순서대로 알맞게 짝지은 것은?", choices: ["구어: rì, 서면어: hào", "구어: hào, 서면어: rì", "구어: yuè, 서면어: hào", "구어: xīngqī, 서면어: rì"], answer: "구어: hào, 서면어: rì" },
+            { q: "요일을 숫자로 매칭하는 중국어 요일 표기 체계에서 '일요일'을 나타낼 수 없는 문장 형태는?", choices: ["Xīngqītiān", "Xīngqīrì", "Xīngqīqī", "둘 다 사용 가능하다"], answer: "Xīngqīqī" },
+            { q: "시각 표현 중 '30분' 분량을 칭할 때 '절반'이라는 한자 의미로 대체할 수 있는 명사는?", choices: ["fēn", "bàn", "kè", "diǎn"], answer: "bàn" },
+            { q: "시각에서 '15분 분량' 단위를 쪼개어 나타낼 때 쓰는 고유 양사 표현은?", choices: ["yí kè", "sān kè", "bàn", "diǎn"], answer: "yí kè" },
+            { q: "'오늘'의 이전 날인 '어제'를 나타내는 올바른 시간사 한어병음 표현은?", choices: ["jīntiān", "zuótiān", "míngtiān", "qiántiān"], answer: "zuótiān" },
+            { q: "요일 명칭 중 '금요일'에 해당하는 정확한 요일 명사 표현의 병음은?", choices: ["Xīngqīyī", "Xīngqīsān", "Xīngqīwǔ", "Xīngqīliù"], answer: "Xīngqīwǔ" },
+            { q: "중국어 문장 구조 내에서 일과나 시간 부사어(예: 8시에)가 놓일 수 있는 올바른 어순 위치는?", choices: ["문장의 맨 뒤 목적어 뒤쪽", "주어의 앞 또는 주어의 바로 뒤(동사 앞)", "동사와 목적어의 정중앙 사이", "아무 곳이나 배치해도 무방함"], answer: "주어의 앞 또는 주어의 바로 뒤(동사 앞)" },
+            { q: "하루 일과 중 '잠을 자다' 행위를 뜻하는 결합어 표현의 병음은?", choices: ["qǐchuáng", "shàngxué", "shuìjiào", "huí jiā"], answer: "shuìjiào" },
+            { q: "상대방에게 생일이 언제인지 날짜를 질문하는 가장 자연스러운 의문문 구조는?", choices: ["Nǐ jǐ suì le?", "Nǐ de shēngrì jǐ xué jǐ hào?", "Nǐ de shēngrì jǐ yuè jǐ hào?", "Nǐ jǐ diǎn huí jiā?"], answer: "Nǐ de shēngrì jǐ yuè jǐ hào?" }
+            ]
+        }
+      }
+    }
+  },
+  science: {
+    midthr: {
+      visangihm: {
+        2.3: {
+          vocab: [
+            { q: "포화상태의 공기 1kg에 담긴 최대의 수증기량을 의미하는 것은?", choices: ["포화 수증기량", "수증기량", "증기량", "불포화 수증기량"], answer: "포화 수증기량" },
+            { q: "일상생활에서 주로 사용하는 습도는?", choices: ["습도", "포화습도", "절대습도", "상대습도"], answer: "상대습도" },
+            { q: "상대습도의 공식은 (현재 공기의 수증기량)/(현재 기온의 포화 수증기량)*100 이다.", choices: ["ㄴㄴ", "ㅖㅖ"], answer: "ㅖㅖ" },
+            { q: "공기가 주변과 열을 주고 받지 않고 팽창하여 온도가 낮아지는 현상은?", choices: ["팽창", "단열팽창", "압축팽창", "고열팽창"], answer: "단열팽창" },
+            { q: "수증기가 물로 변하는 현상은?", choices: ["기화", "응결", "액화", "얼음"], answer: "응결" },
+            { q: "공기가 강하게 상승할떄의 구름은?", choices: ["적운형", "층운형", "빙정형", "수증기형"], answer: "적운형" },
+            { q: "공기가 약하게 상승할떄의 구름은?", choices: ["적운형", "층운형", "빙정형", "수증기형"], answer: "층운형" },
+            { q: "고위도나 저위도 지역에서 비가 내리는 과정은?", choices: ["병합설", "합체설", "응결설", "빙정설"], answer: "빙정설" },
+            { q: "저위도 지역에서 비가 내리는 과정은?", choices: ["병합설", "합체설", "응결설", "빙정설"], answer: "병합설" }
+          ],
+          sentence: [
+            { q: "구름의 생성 과정", tokens: ["공기 덩어리 상승", "단열팽창", "온도하강", "수증기 응결", "구름생성"], displayPool: [ "단열팽창", "공기 덩어리 상승", "수증기 응결",  "온도하강", "구름생성"] }
+        ],
+          exam: [
+            //{ q: "적도(위도 0도) 일대 지역에서 주로 나타나는 기후의 특징은?", choices: ["고온 다습하다", "한랭 건조하다", "사계절이 뚜렷하다", "눈이 상시 내린다"], answer: "고온 다습하다" }
+        ]
+        }
+      }
+    }
+  }
+};
+
+// 최초 초기값 자동 바인딩 설정
+let currentFilters = { subject: 'chinese', grade: 'high', publisher: 'mirae' };
+let currentUnit = 1;
+let currentType = "vocab";
+let questions = [];
+let current = 0;
+let selectedTokens = [];
+
+function toggleDropdown() {
+  const panel = document.getElementById("dropdownPanel");
+  const btn = document.getElementById("selectorBtn");
+  panel.classList.toggle("show");
+  btn.classList.toggle("open");
+}
+
+// 핵심 기능: 상위 필터 변화에 연동해 버튼 리스트들을 재생성하는 엔진
+function renderDropdownOptions() {
+  const subGroup = document.getElementById("subjectGroup");
+  const grdGroup = document.getElementById("gradeGroup");
+  const pubGroup = document.getElementById("publisherGroup");
+
+  // 1. 과목 리스트 생성
+  subGroup.innerHTML = "";
+  Object.keys(quizData).forEach(subKey => {
+    const meta = subjectMeta[subKey] || { name: subKey, icon: "📚" };
+    const activeClass = currentFilters.subject === subKey ? "active" : "";
+    subGroup.innerHTML += `<div class="panel-item ${activeClass}" onclick="changeSubject('${subKey}')">${meta.icon} ${meta.name}</div>`;
+  });
+
+  // 2. 선택된 과목 내에 존재하는 학년 과정 리스트 추출 및 바인딩
+  grdGroup.innerHTML = "";
+  const availableGrades = Object.keys(quizData[currentFilters.subject] || {});
+  
+  // 현재 선택된 학년 과정이 현재 과목에 없다면 첫 번째 과정으로 자동 스위칭
+  if (!availableGrades.includes(currentFilters.grade) && availableGrades.length > 0) {
+    currentFilters.grade = availableGrades[0];
+  }
+
+  availableGrades.forEach(grdKey => {
+    const label = gradeMeta[grdKey] || grdKey;
+    const activeClass = currentFilters.grade === grdKey ? "active" : "";
+    grdGroup.innerHTML += `<div class="panel-item ${activeClass}" onclick="changeGrade('${grdKey}')">${label}</div>`;
+  });
+
+  // 3. 선택된 과목 + 학년 조합 내에 존재하는 출판사 리스트 추출 및 바인딩
+  pubGroup.innerHTML = "";
+  const availablePublishers = Object.keys(quizData[currentFilters.subject]?.[currentFilters.grade] || {});
+
+  // 현재 선택된 출판사가 조건에 없다면 첫 번째 사용 가능한 출판사로 스위칭
+  if (!availablePublishers.includes(currentFilters.publisher) && availablePublishers.length > 0) {
+    currentFilters.publisher = availablePublishers[0];
+  }
+
+  availablePublishers.forEach(pubKey => {
+    const label = publisherMeta[pubKey] || pubKey;
+    const activeClass = currentFilters.publisher === pubKey ? "active" : "";
+    pubGroup.innerHTML += `<div class="panel-item ${activeClass}" onclick="changePublisher('${pubKey}')">${label}</div>`;
+  });
+
+  // 탑바 텍스트 동적 동기화 업데이트
+  const sMeta = subjectMeta[currentFilters.subject];
+  const gName = gradeMeta[currentFilters.grade] || currentFilters.grade;
+  const pName = publisherMeta[currentFilters.publisher] || currentFilters.publisher;
+
+  document.getElementById("currentSubjectIcon").innerText = sMeta ? sMeta.icon : "📚";
+  document.getElementById("currentSelectionText").innerText = `${sMeta ? sMeta.name : currentFilters.subject} · ${gName} · ${pName}`;
+}
+
+function changeSubject(subKey) {
+  currentFilters.subject = subKey;
+  // 과목이 바뀌면 연쇄 정보 불일치 방지를 위해 하위 옵션 재동기화 연쇄 연출
+  renderDropdownOptions();
+  updateHomeLayout();
+}
+
+function changeGrade(grdKey) {
+  currentFilters.grade = grdKey;
+  renderDropdownOptions();
+  updateHomeLayout();
+}
+
+function changePublisher(pubKey) {
+  currentFilters.publisher = pubKey;
+  renderDropdownOptions();
+  toggleDropdown(); // 출판사까지 모두 고르면 자동으로 매뉴창을 닫아줌
+  updateHomeLayout();
+}
+
+function updateHomeLayout() {
+  const container = document.getElementById("unitContainer");
+  container.innerHTML = "";
+
+  const currentDataset = quizData[currentFilters.subject]?.[currentFilters.grade]?.[currentFilters.publisher] || {};
+  const units = Object.keys(currentDataset).sort((a,b) => a - b);
+
+  if(units.length === 0) {
+    container.innerHTML = "<div style='text-align:center; padding:50px 20px; color:#999; font-size:14px;'>해당 매칭 조건에 등록된 단원이 없습니다.<br>상단 바를 눌러 선택지를 변경해 보세요!</div>";
+    return;
+  }
+
+  units.forEach(unit => {
+    const unitDiv = document.createElement("div");
+    unitDiv.className = "unit-divider";
+    unitDiv.innerHTML = `<span>${unit}단원</span>`;
+    container.appendChild(unitDiv);
+
+    const pathDiv = document.createElement("div");
+    pathDiv.className = "path";
+    pathDiv.innerHTML = `
+      <div class="node vocab" onclick="startQuiz(${unit},'vocab','개념 및 단어')">📚<span>개념</span></div>
+      <div class="node sentence right" onclick="startQuiz(${unit},'sentence','구조 및 나열')">🗣️<span>나열/매칭</span></div>
+      <div class="node exam" onclick="startQuiz(${unit},'exam','실전 기출')">🎯<span>실전 기출</span></div>
+    `;
+    container.appendChild(pathDiv);
+  });
+}
+
+function startQuiz(unit, type, displayName){
+  currentUnit = unit;
+  currentType = type;
+
+  const sourceData = quizData[currentFilters.subject]?.[currentFilters.grade]?.[currentFilters.publisher]?.[unit]?.[type];
+  if(!sourceData || sourceData.length === 0) {
+    alert("준비된 트레이닝 문항 정보가 비어 있습니다.");
+    return;
+  }
+
+  questions = JSON.parse(JSON.stringify(sourceData));
+  shuffle(questions);
+
+  if(type === "vocab" || type === "exam") {
+    questions.forEach(question => { if(question.choices) shuffle(question.choices); });
+  }
+
+  current = 0;
+  document.getElementById("home").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  document.getElementById("quizTitle").innerText = `${unit}단원 - ${displayName}`;
+
+  loadQuestion();
+}
+
+function shuffle(array){
+  for(let i = array.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function loadQuestion(){
+  document.getElementById("resultBox").classList.remove("show");
+  if (questions.length === 0) return;
+  
+  const q = questions[current];
+  const questionEl = document.querySelector(".question");
+  const descEl = document.getElementById("quizDesc");
+  const contentEl = document.getElementById("quizContent");
+
+  questionEl.classList.add("fadeOut");
+
+  setTimeout(() => {
+    questionEl.innerText = q.q;
+    questionEl.classList.remove("fadeOut");
+    document.getElementById("bar").style.width = ((current + 1) / questions.length) * 100 + "%";
+    
+    if(currentType === "sentence") {
+      selectedTokens = [];
+      descEl.innerText = "💡 올바른 흐름 결합이 되도록 아래 카드를 순서대로 탭하세요.";
+
+      let pool = [...q.displayPool];
+      q.tokens.forEach(t => { if(!pool.includes(t)) pool.push(t); });
+      shuffle(pool);
+
+      contentEl.innerHTML = `
+        <div class="sentence-area" id="assemblyArea"></div>
+        <div class="word-pool" id="cardPool"></div>
+      `;
+
+      const poolArea = document.getElementById("cardPool");
+      pool.forEach((word, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "card";
+        btn.innerText = word;
+        btn.id = `card-${idx}`;
+        btn.onclick = () => selectCard(word, `card-${idx}`);
+        poolArea.appendChild(btn);
+      });
+    } else {
+      descEl.innerText = "💡 제시된 보기를 읽고 알맞은 정답 카드를 하나 고르세요.";
+      let html = `<div class="choices">`;
+      q.choices.forEach(choice => {
+        const safeChoice = choice.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        html += `<button class="choice" onclick="checkAnswer('${safeChoice}')">${choice}</button>`;
+      });
+      html += `</div>`;
+      contentEl.innerHTML = html;
+    }
+  }, 150);
+}
+
+function selectCard(word, cardId) {
+  const cardBtn = document.getElementById(cardId);
+  if(cardBtn.classList.contains("used")) return;
+
+  cardBtn.classList.add("used");
+  selectedTokens.push({ word: word, cardId: cardId });
+  renderAssembly();
+  
+  if(selectedTokens.length === questions[current].tokens.length) {
+    checkSentenceAnswer();
+  }
+}
+
+function renderAssembly() {
+  const area = document.getElementById("assemblyArea");
+  area.innerHTML = "";
+  selectedTokens.forEach((item, index) => {
+    const span = document.createElement("button");
+    span.className = "card";
+    span.style.background = "#e1f5fe";
+    span.style.borderColor = "#03a9f4";
+    span.innerText = item.word;
+    span.onclick = () => cancelCard(index);
+    area.appendChild(span);
+  });
+}
+
+function cancelCard(index) {
+  const item = selectedTokens[index];
+  const cardBtn = document.getElementById(item.cardId);
+  if(cardBtn) cardBtn.classList.remove("used");
+  selectedTokens.splice(index, 1);
+  renderAssembly();
+}
+
+function checkSentenceAnswer() {
+  const q = questions[current];
+  let isCorrect = true;
+  for(let i=0; i<q.tokens.length; i++) {
+    if(selectedTokens[i].word !== q.tokens[i]) { isCorrect = false; break; }
+  }
+  if(isCorrect) showResult(true, "🎉 정답입니다!");
+  else showResult(false, `❌ 오답! 올바른 매칭: [ ${q.tokens.join(" → ")} ]`);
+}
+
+function checkAnswer(choice){
+  if(choice === questions[current].answer) showResult(true, "🎉 정답입니다!");
+  else showResult(false, `❌ 오답! 정답은 [ ${questions[current].answer} ] 입니다.`);
+}
+
+function showResult(correct, text){
+  const box = document.getElementById("resultBox");
+  box.innerHTML = `<div class="resultTitle">${text}</div><button onclick="nextQuestion()">다음 문제</button>`;
+  box.style.background = correct ? "#58CC02" : "#ff4b4b";
+  box.classList.add("show");
+  
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function nextQuestion(){
+  document.getElementById("resultBox").classList.remove("show");
+  current++;
+  if(current >= questions.length){
+    setTimeout(() => { alert("🏆 대단해요! 유닛 트레이닝을 마쳤습니다."); goHome(); }, 200);
+    return;
+  }
+  loadQuestion();
+}
+
+function goHome(){
+  document.getElementById("resultBox").classList.remove("show");
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("home").style.display = "block";
+  document.getElementById("bar").style.width = "0%";
+  updateHomeLayout();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  // 앱 켜질 때 동적 필터 조립기 작동 및 화면 갱신
+  renderDropdownOptions();
+  updateHomeLayout();
+});
+</script>
+</body>
+</html>
