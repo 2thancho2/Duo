@@ -239,6 +239,24 @@
   .choice{ padding:18px 22px; border:2px solid #e5e5e5; border-radius:16px; background:white; font-size:17px; font-weight: bold; cursor:pointer; transition: all 0.1s; text-align: left; box-shadow: 0 3px 0 #e5e5e5; }
   .choice:active{ transform:translateY(2px); box-shadow: 0 1px 0 #e5e5e5; border-color: #aaa; }
 
+  /* mp3 듣기 버튼 */
+  .audio-box { display: flex; justify-content: center; margin: 20px 20px 5px 20px; }
+  .play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    background: #1cb0f6;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #1899d6;
+    transition: all 0.1s;
+    user-select: none;
+  }
+  .play-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #1899d6; }
+  #playLabel { text-align: center; margin: 6px 20px 10px 20px; color: #1cb0f6; font-size: 13px; font-weight: bold; }
+
 /* 기존 #resultBox와 #resultBox.show를 찾아서 이 코드로 교체 */
 #resultBox { 
   padding: 24px; 
@@ -335,19 +353,22 @@
 const subjectMeta = {
   chinese: { name: "중국어", icon: "🇨🇳" },
   science: { name: "과학", icon: "🧬" },
-  history: { name: "역사", icon: "📜" }
+  history: { name: "역사", icon: "📜" },
+  tech: { name: "기술", icon: "🔧" }
 
 };
 
 const gradeMeta = {
   midthr: "중등 3",
-    //high: "고등"
+  techperf: "기술수행"
+  //high: "고등"
 };
 
 const publisherMeta = {
   miraeuh: "미래엔 우치갑 15개정",
   visangihm: "비상 임태훈 15개정",
- donganho: "동아 노대환 15개정"
+  donganho: "동아 노대환 15개정",
+  morsecode: "영어 모스코드"
 
 };
 
@@ -781,14 +802,57 @@ science: {
       { q: "[실전 7] 발해의 통치 기구인 3성 6부제에 대한 설명으로 옳은 것은?", choices: ["당의 제도를 수용하되, 명칭과 운영을 독자적으로 변형하여 자주성을 보였다.", "고구려의 제도를 그대로 계승하여 귀족 합의제로 운영했다.", "신라의 집사부 체제를 모방하여 시중의 권한을 키웠다.", "지방을 9주 5소경 체제로 통제하기 위한 중앙 관제였다."], answer: "당의 제도를 수용하되, 명칭과 운영을 독자적으로 변형하여 자주성을 보였다." },
       { q: "[실전 8] 신라 말기(하대) 진성여왕 시기, 지배층의 가혹한 세금 독촉과 정치 혼란으로 인해 사벌주(상주)에서 일어난 대표적인 농민 봉기는?", choices: ["김헌창의 난", "망이·망소이의 난", "원종과 애노의 난", "홍경래의 난"], answer: "원종과 애노의 난" },
       { q: "[실전 9] 신라 말기 지방에서 독자적인 군사, 경제적 세력을 키우며 선종 불교와 풍수지리설을 수용해 새로운 사회 건설을 주도한 세력은?", choices: ["진골 귀족", "6두품 학자", "호족", "화랑"], answer: "호족" },
-      { q: "[실전 10] 후삼국 시대의 성립 과정에서 완산주에 후백제를 세운 인물과, 송악에서 후고구려를 세운 인물을 바르게 짝지은 것은?", choices: ["견훤 - 궁예", "궁예 - 왕건", "견훤 - 왕건", "장보고 - 궁예"], answer: "견훤 - 궁예" }
+{ q: "[실전 10] 후삼국 시대의 성립 과정에서 완산주에 후백제를 세운 인물과, 송악에서 후고구려를 세운 인물을 바르게 짝지은 것은?", choices: ["견훤 - 궁예", "궁예 - 왕건", "견훤 - 왕건", "장보고 - 궁예"], answer: "견훤 - 궁예" }
     ]
   }
-          }
+          },
 }
+  },
+
+tech: {
+  techperf: {
+    morsecode: {
+      1: {
+        vocab: [
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: ".-", choices: ["A", "E", "T", "N"], answer: "A" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: "-...", choices: ["B", "D", "F", "L"], answer: "B" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: "-..", choices: ["D", "B", "U", "E"], answer: "D" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: ".", choices: ["I", "E", "S", "T"], answer: "E" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: "..-.", choices: ["F", "B", "L", "V"], answer: "F" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: "--", choices: ["O", "M", "T", "G"], answer: "M" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: "-.", choices: ["N", "A", "M", "T"], answer: "N" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: "---", choices: ["M", "O", "Q", "K"], answer: "O" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: "..-", choices: ["Q", "Z", "U", "J"], answer: "U" },
+          { q: "모스부호를 들어보고, 어떤 글자인지 고르세요.", morse: ".--", choices: ["J", "W", "K", "Y"], answer: "W" }
+        ],
+        sentence: [
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: "-... . -..", tokens: ["B", "E", "D"], displayPool: ["B", "E", "D", "A", "C", "T"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: "-.. --- --.", tokens: ["D", "O", "G"], displayPool: ["D", "O", "G", "B", "E", "T"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: "-.-. .- -", tokens: ["C", "A", "T"], displayPool: ["C", "A", "T", "D", "O", "G"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: ". --. --.", tokens: ["E", "G", "G"], displayPool: ["E", "G", "G", "B", "O", "D"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: ".... .. --. ....", tokens: ["H", "I", "G", "H"], displayPool: ["H", "I", "G", "H", "M", "E"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: ".... --- -- .", tokens: ["H", "O", "M", "E"], displayPool: ["H", "O", "M", "E", "A", "T"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: "--. --- --- -..", tokens: ["G", "O", "O", "D"], displayPool: ["G", "O", "O", "D", "E", "N"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: "-. .- -- .", tokens: ["N", "A", "M", "E"], displayPool: ["N", "A", "M", "E", "T", "H"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: ".-.. --- ...- .", tokens: ["L", "O", "V", "E"], displayPool: ["L", "O", "V", "E", "A", "N"] },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 글자를 순서대로 배열하세요.", morse: "-. --- .--", tokens: ["N", "O", "W"], displayPool: ["N", "O", "W", "B", "E", "D"] }
+        ],
+        exam: [
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: ".... . .-.. .-.. ---", choices: ["HELLO", "HELP", "HAPPY", "WORLD"], answer: "HELLO" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: "-.-. .... . ... ...", choices: ["CHESS", "CLASS", "CROSS", "COAST"], answer: "CHESS" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: "..-. .. .-. ... -", choices: ["FRAME", "FINAL", "FIRST", "FAITH"], answer: "FIRST" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: "-.. .-. . . --", choices: ["DREAM", "DRIVE", "DRAMA", "DRAIN"], answer: "DREAM" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: "..-. .- -. -.-. -.--", choices: ["FANCY", "FAMILY", "FINISH", "FORCE"], answer: "FANCY" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: "-... .-. .- .. -.", choices: ["BOARD", "BRAIN", "BRAND", "BREAD"], answer: "BRAIN" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: ".- --. .- .. -.", choices: ["APPLY", "AGAIN", "AHEAD", "AROUND"], answer: "AGAIN" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: ".... --- .-. ... .", choices: ["HIGHT", "HORSE", "HOUSE", "HAPPY"], answer: "HORSE" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: ".... .- .--. .--. -.--", choices: ["HUMAN", "HAPPY", "GRASS", "GUESS"], answer: "HAPPY" },
+          { q: "모스부호를 들어보고, 어떤 영어 단어인지 고르세요.", morse: ".-- .- - . .-.", choices: ["WATER", "WRITE", "WORLD", "WASTE"], answer: "WATER" }
+        ]
+      }
+    }
   }
- 
- 
+  }
 };
 
 // 최초 초기값 자동 바인딩 설정
@@ -798,6 +862,29 @@ let currentType = "vocab";
 let questions = [];
 let current = 0;
 let selectedTokens = [];
+let currentAudio = null;       // (legacy 폴백용 - 사용 안 함)
+let morseCtx = null;
+let morseOsc  = null;
+
+// 모스부호 → 텍스트 변환용 사전
+const MORSE_MAP = {
+  '.-':'A','-...':'B','-.-.':'C','-..':'D','.':'E','..-.':'F',
+  '--.':'G','....':'H','..':'I','.---':'J','-.-':'K','.-..':'L',
+  '--':'M','-.':'N','---':'O','.--.':'P','--.-':'Q','.-.':'R',
+  '...':'S','-':'T','..-':'U','...-':'V','.--':'W','-..-':'X',
+  '-.--':'Y','--..':'Z',
+  '-----':'0','..---':'1','...--':'2','....-':'3','.....':'4',
+  '-....':'5','--...':'6','---..':'7','----.':'8','----.':'9'
+};
+
+// 모스부호 오디오 설정 (Web Audio API)
+const MORSE_FREQ  = 500;  // 음높이 (Hz)
+const MORSE_UNIT  = 240;  // 속도 5 ≒ 5 WPM → 1유닛 = 240ms
+const MORSE_DIT   = MORSE_UNIT;
+const MORSE_DAH   = MORSE_UNIT * 3;
+const MORSE_ELEM_GAP = MORSE_UNIT;       // 다/닷 사이
+const MORSE_CHAR_GAP = MORSE_UNIT * 3;   // 글자 사이
+const MORSE_WORD_GAP = MORSE_UNIT * 7;   // 단어 사이
 
 function toggleDropdown() {
   const panel = document.getElementById("dropdownPanel");
@@ -965,6 +1052,7 @@ function loadQuestion(){
       shuffle(pool);
 
       contentEl.innerHTML = `
+        ${audioBar(q)}
         <div class="sentence-area" id="assemblyArea"></div>
         <div class="word-pool" id="cardPool"></div>
       `;
@@ -986,9 +1074,89 @@ function loadQuestion(){
         html += `<button class="choice" onclick="checkAnswer('${safeChoice}')">${choice}</button>`;
       });
       html += `</div>`;
-      contentEl.innerHTML = html;
+      contentEl.innerHTML = `${audioBar(q)}${html}`;
     }
   }, 150);
+}
+
+// 모스부호가 있는 문제면 듣기 버튼을 만든다 (없으면 빈 문자열)
+function audioBar(q){
+  if(!q.morse) return "";
+  return `
+    <div class="audio-box">
+      <button class="play-btn" onclick="playMorse()">🔊</button>
+    </div>
+    <div id="playLabel">버튼을 눌러 모스부호를 들어보세요</div>
+  `;
+}
+
+// Web Audio API로 모스부호 톤을 실시간 생성하여 재생
+function playMorse(){
+  stopMorse();
+  const q = questions[current];
+  if(!q || !q.morse) return;
+
+  // AudioContext 생성 (최초 1회)
+  if(!morseCtx || morseCtx.state === 'closed'){
+    morseCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if(morseCtx.state === 'suspended') morseCtx.resume();
+
+  const ctx = morseCtx;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.value = MORSE_FREQ;
+  gain.gain.value = 0.7;
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  morseOsc = osc;
+
+  let t = ctx.currentTime + 0.05;  // 약간의 버퍼
+
+  const seq = q.morse.trim();
+
+  // seq를 "글자 덩어리들"로 분리 (공백 기준)
+  // 각 글자 덩어리는 '.'과 '-'의 연속
+  // 글자 사이 공백: 단어 내부 = MORSE_CHAR_GAP, 두 개 이상 공백 = MORSE_WORD_GAP
+  const tokens = seq.split(/( +)/);
+
+  for(let i = 0; i < tokens.length; i++){
+    const tok = tokens[i];
+    if(tok === '') continue;
+
+    if(tok.includes('.')){
+      // 이 토큰은 하나의 글자 모스부호
+      for(let j = 0; j < tok.length; j++){
+        const dur = tok[j] === '.' ? MORSE_DIT : MORSE_DAH;
+        gain.gain.setValueAtTime(0.7, t);
+        gain.gain.setValueAtTime(0, t + dur / 1000);
+        t += dur / 1000 + MORSE_ELEM_GAP / 1000;
+      }
+      // 글자 간 간격: 다음 토큰이 있고 다음 토큰도 모스부호(글자)라면
+      const nextTok = tokens[i + 1];
+      if(nextTok && nextTok.includes('.')){
+        t += MORSE_CHAR_GAP / 1000 - MORSE_ELEM_GAP / 1000; // 이미 elem_gap 더해졌으므로 보정
+      }
+    } else {
+      // 공백 토큰 → 단어 간 간격 (원래 공백 수 - 1) × MORSE_CHAR_GAP + MORSE_WORD_GAP
+      // 두 개 이상 공백이면 WORD_GAP, 하나면 CHAR_GAP 이미 반영됨
+      // 여기선 다음 글자 시작 전에 WORD_GAP 만큼 더 대기
+      t += MORSE_WORD_GAP / 1000;
+    }
+  }
+
+  osc.start(ctx.currentTime + 0.01);
+  osc.stop(t + 0.1);
+  osc.onended = () => { morseOsc = null; };
+}
+
+function stopMorse(){
+  if(morseOsc){
+    try { morseOsc.stop(); } catch(e){}
+    morseOsc = null;
+  }
 }
 
 function selectCard(word, cardId) {
@@ -1051,6 +1219,7 @@ function showResult(correct, text){
 }
 
 function nextQuestion(){
+  stopMorse();
   document.getElementById("resultBox").classList.remove("show");
   current++;
   if(current >= questions.length){
@@ -1061,6 +1230,7 @@ function nextQuestion(){
 }
 
 function goHome(){
+  stopMorse();
   document.getElementById("resultBox").classList.remove("show");
   document.getElementById("quiz").style.display = "none";
   document.getElementById("home").style.display = "block";
