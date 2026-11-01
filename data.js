@@ -1115,6 +1115,7 @@ science: {
         ]
       }
     }
+  }
   },
   social: {
     midthr: {
@@ -1307,5 +1308,4 @@ science: {
         }
       }
     }
-  }
 };
