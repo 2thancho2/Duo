@@ -1116,7 +1116,7 @@ science: {
       }
     }
   }
-  },
+},
   social: {
     midthr: {
       visangcsg: {
@@ -1308,4 +1308,5 @@ science: {
         }
       }
     }
+  }
 };
