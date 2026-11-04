@@ -114,6 +114,163 @@ input[type=number]{width:90px;padding:8px;border:1.5px solid var(--gray-300);bor
 .toast{background:var(--ink);color:var(--white);padding:10px 16px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.3)}
 @media (max-width:380px){.node{width:76px;height:76px;font-size:21px}.right{transform:translateX(48px)}.node.right:hover{transform:translateX(48px) translateY(-2px)}.node.right:active{transform:translateX(48px) translateY(4px)}h1{font-size:28px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+
+/* ==================================
+   DUOSHAO 반응형 화면 설정
+================================== */
+
+html, body {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+#unitContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 0 20px 35px;
+}
+
+.unit-card {
+  min-width: 0;
+  border: 1px solid var(--gray-300);
+  border-radius: 18px;
+  background: var(--white);
+  padding: 10px;
+}
+
+#quiz {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+#panel {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+/* 휴대폰 */
+@media (max-width: 600px) {
+  .app-container {
+    max-width: 100%;
+    box-shadow: none;
+  }
+
+  #unitContainer {
+    grid-template-columns: 1fr;
+    padding: 0 12px 30px;
+    gap: 12px;
+  }
+
+  .unit-card {
+    padding: 8px 4px;
+  }
+
+  .toolrow {
+    flex-wrap: wrap;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .question {
+    font-size: 21px;
+    padding: 0 16px;
+  }
+
+  .choices {
+    padding: 12px;
+  }
+
+  .choice {
+    font-size: 14px;
+    padding: 15px;
+  }
+
+  .pbody {
+    padding: 0 12px 30px;
+  }
+
+  .tabs {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* 태블릿 */
+@media (min-width: 601px) and (max-width: 900px) {
+  .app-container {
+    max-width: 900px;
+  }
+
+  #unitContainer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0 24px 40px;
+    gap: 18px;
+  }
+
+  .question {
+    font-size: 28px;
+  }
+
+  .pbody {
+    padding: 0 24px 40px;
+  }
+}
+
+/* 컴퓨터 */
+@media (min-width: 901px) {
+  body {
+    padding: 24px 20px;
+  }
+
+  .app-container {
+    max-width: 1200px;
+    border-radius: 20px;
+    min-height: calc(100vh - 48px);
+  }
+
+  #unitContainer {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 30px 40px;
+    gap: 22px;
+  }
+
+  .question {
+    font-size: 30px;
+  }
+
+  .choices {
+    gap: 14px;
+  }
+
+  .choice {
+    padding: 19px;
+  }
+}
+
+/* 큰 컴퓨터 */
+@media (min-width: 1200px) {
+  .app-container {
+    max-width: 1200px;
+  }
+}
+
+/* 터치 환경 */
+button {
+  touch-action: manipulation;
+}
 </style>
 </head>
 <body>
@@ -147,7 +304,8 @@ input[type=number]{width:90px;padding:8px;border:1.5px solid var(--gray-300);bor
   <div id="quiz" style="display:none">
     <div class="topbar">
       <button onclick="goHome()">x</button>
-      <div class="progress"><div id="bar"></bar>
+      <div class="progress">
+        <div id="bar"></div>
       </div>
       <button onclick="saveCurrentImage()" title="이미지 저장">⬇️</button>
   </div>
@@ -284,23 +442,75 @@ function renderHomeExtra(){
   $("homeExtra").innerHTML=h;
 }
 
-function updateHomeLayout(){
+
+function updateHomeLayout() {
   renderHomeExtra();
-  const c=$("unitContainer");c.innerHTML="";
-  const ds=quizData[currentFilters.subject]?.[currentFilters.grade]?.[currentFilters.publisher]||{};
-  const units=Object.keys(ds).sort((a,b)=>a-b);
-  if(!units.length){c.innerHTML="<div style='text-align:center;padding:50px 20px;color:#999;font-size:14px'>해당 매칭 조건에 등록된 단원이 없습니다.<br>상단 바를 눌러 선택지를 변경해 보세요!</div>";return}
-  const {subject:s,grade:g,publisher:p}=currentFilters;
-  const pct=(u,t)=>{const tot=(ds[u][t]||[]).length;return tot?Math.round(((S.P[[s,g,p,u,t].join('|')]||[]).length)/tot*100):0};
-  units.forEach(u=>{
-    const dv=document.createElement("div");dv.className="unit-divider";dv.innerHTML=`<span>${u}단원</span>`;c.appendChild(dv);
-    const pd=document.createElement("div");pd.className="path";
-    pd.innerHTML=`<div class="node vocab" onclick="startQuiz(${u},'vocab','개념 및 단어')">📚<span>개념</span><em>${pct(u,'vocab')}%</em></div>
-    <div class="node sentence right" onclick="startQuiz(${u},'sentence','구조 및 나열')">🗣️<span>나열/매칭</span><em>${pct(u,'sentence')}%</em></div>
-    <div class="node exam" onclick="startQuiz(${u},'exam','실전 기출')">🎯<span>실전 기출</span><em>${pct(u,'exam')}%</em></div>`;
-    c.appendChild(pd);
+
+  const c = $("unitContainer");
+  c.innerHTML = "";
+
+  const ds = quizData[currentFilters.subject]?.[currentFilters.grade]?.[currentFilters.publisher] || {};
+
+  const units = Object.keys(ds).sort(
+    (a, b) => Number(a) - Number(b)
+  );
+
+  if (!units.length) {
+    c.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#999">
+        해당 매칭 조건에 등록된 단원이 없습니다.
+      </div>`;
+    return;
+  }
+
+  const {subject:s, grade:g, publisher:p} = currentFilters;
+
+  const pct = (u,t) => {
+    const total = (ds[u][t] || []).length;
+    return total
+      ? Math.round(
+          (S.P[[s,g,p,u,t].join('|')] || []).length / total * 100
+        )
+      : 0;
+  };
+
+  units.forEach(u => {
+    const card = document.createElement("section");
+    card.className = "unit-card";
+
+    card.innerHTML = `
+      <div class="unit-divider">
+        <span>${esc(u)}단원</span>
+      </div>
+
+      <div class="path">
+        <div class="node vocab"
+          onclick="startQuiz('${esc(u)}','vocab','개념 및 단어')">
+          📚
+          <span>개념</span>
+          <em>${pct(u,'vocab')}%</em>
+        </div>
+
+        <div class="node sentence right"
+          onclick="startQuiz('${esc(u)}','sentence','구조 및 나열')">
+          🗣️
+          <span>나열/매칭</span>
+          <em>${pct(u,'sentence')}%</em>
+        </div>
+
+        <div class="node exam"
+          onclick="startQuiz('${esc(u)}','exam','실전 기출')">
+          🎯
+          <span>실전 기출</span>
+          <em>${pct(u,'exam')}%</em>
+        </div>
+      </div>
+    `;
+
+    c.appendChild(card);
   });
 }
+
 
 /* ================= 퀴즈 시작 ================= */
 function launch(list,title,start,ok){
@@ -595,7 +805,7 @@ async function saveCurrentImage() {
     totalH += 273;
     totalH += Math.max(1, c.qLines.length) * lineH;
     totalH += Math.max(1, c.aLines.length) * lineH;
-    if (c.tags.length) totalH += 20 + c.tag.length * 32;
+    if (c.tags.length) totalH += 20 + c.tags.length * 32;
   });
 
   totalH += 100;
