@@ -270,7 +270,41 @@ html, body {
 button {
   touch-action: manipulation;
 }
+
+
+/* DUOSHAO 앱 설치 버튼 */
+
+#installBtn {
+  border: 1.5px solid var(--ink);
+  background: var(--ink);
+  color: var(--white);
+  font-weight: 900;
+}
+
+#installBtn:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  #installBtn {
+    width: auto;
+  }
+}
+
 </style>
+
+<!-- DUOSHAO PWA 설정 -->
+<link rel="manifest" href="./manifest.json">
+
+<meta name="theme-color" content="#F4F4F2">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- iPhone 설정 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="DUOSHAO">
+
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 </head>
 <body>
 <div class="app-container">
@@ -283,6 +317,12 @@ button {
       <button class="chip" onclick="goPanel('reward')">🏅 보상</button>
       <button class="chip" onclick="goPanel('settings')">⚙️ 설정</button>
       <button class="chip" id="themeBtn" onclick="toggleTheme()">🌙</button>
+      <button class="chip" id="installBtn"
+               style="display:none"
+              onclick="installApp()">
+        📲 앱 설치
+      </button>
+
     </div>
     <div class="custom-header">
       <button class="selector-btn" id="selectorBtn" onclick="toggleDropdown()">
