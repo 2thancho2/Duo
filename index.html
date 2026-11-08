@@ -992,6 +992,118 @@ async function saveCurrentImage() {
     toast('📸 이미지 저장 완료!');
   }, 'image/png');
 }
+
+
+/* =================================
+   DUOSHAO PWA INSTALL SYSTEM
+================================= */
+
+let deferredPrompt = null;
+
+const installBtn = document.getElementById("installBtn");
+
+const isIOS =
+  /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === "MacIntel" &&
+   navigator.maxTouchPoints > 1);
+
+function isInstalled() {
+  return window.matchMedia(
+    "(display-mode: standalone)"
+  ).matches || window.navigator.standalone === true;
+}
+
+// 설치 버튼 표시
+function updateInstallButton() {
+  if (isInstalled()) {
+    installBtn.style.display = "none";
+    return;
+  }
+
+  installBtn.style.display = "inline-block";
+
+  installBtn.textContent = isIOS
+    ? "📲 홈 화면에 추가"
+    : "📲 DUOSHAO 앱 설치";
+}
+
+// Android Chrome 설치 가능 이벤트
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredPrompt = event;
+  updateInstallButton();
+});
+
+// 설치 버튼 클릭
+async function installApp() {
+
+  if (isInstalled()) {
+    toast("이미 DUOSHAO가 설치되어 있어요!");
+    return;
+  }
+
+  // iPhone / iPad
+  if (isIOS) {
+    alert(
+      "📱 DUOSHAO 설치 방법\n\n" +
+      "1. Safari로 DUOSHAO에 접속하세요.\n" +
+      "2. 공유 버튼을 누르세요.\n" +
+      "3. 홈 화면에 추가를 선택하세요.\n" +
+      "4. 추가를 누르면 설치 완료!\n\n" +
+      "홈 화면에서 DUOSHAO를 실행하세요."
+    );
+    return;
+  }
+
+  // Android Chrome
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+
+    const result = await deferredPrompt.userChoice;
+
+    if (result.outcome === "accepted") {
+      toast("🎉 DUOSHAO 설치를 완료했어요!");
+    }
+
+    deferredPrompt = null;
+    updateInstallButton();
+    return;
+  }
+
+  // 아직 설치 이벤트가 발생하지 않았거나
+  // Samsung Internet 등 다른 브라우저인 경우
+  alert(
+    "DUOSHAO 설치 방법\n\n" +
+    "브라우저 메뉴(⋮)를 열고\n" +
+    "'앱 설치' 또는 '홈 화면에 추가'를 선택하세요."
+  );
+}
+
+// 설치 완료 이벤트
+window.addEventListener("appinstalled", () => {
+  installBtn.style.display = "none";
+  toast("🎉 DUOSHAO 앱 설치 완료!");
+});
+
+// 설치 상태 변경
+updateInstallButton();
+
+window.matchMedia("(display-mode: standalone)")
+  .addEventListener("change", updateInstallButton);
+
+// 서비스 워커 등록
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(() => {
+        console.log("DUOSHAO 오프라인 기능 활성화");
+      })
+      .catch(error => {
+        console.error("서비스 워커 등록 실패:", error);
+      });
+  });
+}
+
 /* ================= 시작 ================= */
 document.addEventListener("DOMContentLoaded",()=>{
   applyTheme();
